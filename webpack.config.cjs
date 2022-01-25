@@ -57,53 +57,8 @@ const config = {
       },
     ],
   },
-  // module: {
-  //   rules: [
-  //     {
-  //       test: /\.(js|jsx)$/,
-  //       use: 'babel-loader',
-  //       exclude: /node_modules/
-  //     },
-  //     {
-  //       test: /\.png$/,
-  //       use: [
-  //         {
-  //           loader: 'url-loader',
-  //           options: {
-  //             mimetype: 'image/png'
-  //           }
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       test: /\.scss$/,
-  //       use: [
-  //         MiniCssExtractPlugin.loader,
-  //         'css-loader',
-  //         'sass-loader'
-  //       ]
-  //     },
-  //     {
-  //       test: /\.svg$/,
-  //       use: 'file-loader'
-  //     },
-  //     {
-  //       test: /\.ts(x)?$/,
-  //       loader: 'ts-loader',
-  //       exclude: /node_modules/
-  //     },
-  //     {
-  //       test: /\.css$/,
-  //       use: [
-  //         MiniCssExtractPlugin.loader,
-  //         'css-loader'
-  //       ]
-  //     }
-  //   ]
-  // },
   resolve: {
     extensions: [
-      '.tsx',
       '.ts',
       '.jsx',
       '.js'
