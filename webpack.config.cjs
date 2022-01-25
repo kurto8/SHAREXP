@@ -9,7 +9,8 @@ const config = {
   devServer: {
     compress: true,
     static: {
-      filename: './client/static/',
+      directory: path.join(__dirname, 'client/static/'),
+      publicPath: '/',
     },
     host: 'localhost',
     port: 3000,
@@ -27,47 +28,79 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
-        use: 'babel-loader',
-        exclude: /node_modules/
+        test: /\.jsx?/,
+        exclude: /(node_modules)/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env", "@babel/preset-react"],
+          },
+        },
       },
       {
-        test: /\.png$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              mimetype: 'image/png'
-            }
-          }
-        ]
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'sass-loader'
-        ]
+        test: /\.(png|jp(e*)g|svg|gif)$/,
+        use: ["file-loader"],
       },
       {
         test: /\.svg$/,
-        use: 'file-loader'
+        use: ["@svgr/webpack"],
       },
       {
-        test: /\.ts(x)?$/,
-        loader: 'ts-loader',
-        exclude: /node_modules/
-      },
-      {
-        test: /\.css$/,
+        test: /\.s?[ac]ss$/i,
         use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader'
-        ]
-      }
-    ]
+          process.env.NODE_ENV === 'production'
+            ? MiniCssExtractPlugin.loader
+            : "style-loader",
+          "css-loader",
+          "sass-loader",
+        ],
+      },
+    ],
   },
+  // module: {
+  //   rules: [
+  //     {
+  //       test: /\.(js|jsx)$/,
+  //       use: 'babel-loader',
+  //       exclude: /node_modules/
+  //     },
+  //     {
+  //       test: /\.png$/,
+  //       use: [
+  //         {
+  //           loader: 'url-loader',
+  //           options: {
+  //             mimetype: 'image/png'
+  //           }
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       test: /\.scss$/,
+  //       use: [
+  //         MiniCssExtractPlugin.loader,
+  //         'css-loader',
+  //         'sass-loader'
+  //       ]
+  //     },
+  //     {
+  //       test: /\.svg$/,
+  //       use: 'file-loader'
+  //     },
+  //     {
+  //       test: /\.ts(x)?$/,
+  //       loader: 'ts-loader',
+  //       exclude: /node_modules/
+  //     },
+  //     {
+  //       test: /\.css$/,
+  //       use: [
+  //         MiniCssExtractPlugin.loader,
+  //         'css-loader'
+  //       ]
+  //     }
+  //   ]
+  // },
   resolve: {
     extensions: [
       '.tsx',
