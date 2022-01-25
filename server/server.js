@@ -6,6 +6,9 @@ import { fileURLToPath } from 'url';
 // import dotenv from 'dotenv';
 // dotenv.config();
 
+import companiesRouter from './routes/companies.js';
+
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -19,8 +22,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../index.html'));
-})
+});
 
+app.use('/api/companies', companiesRouter);
 
 // route all other calls to 404 error handler
 app.use((req, res) => res.status(404).json('Endpoint could not be found'));
