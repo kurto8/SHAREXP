@@ -8,9 +8,14 @@ router.get("/", companiesController.getCompanies, (req, res) => {
   });
 });
 
-router.post("/", companiesController.addCompany, (req, res) => {
+router.post("/", 
+  companiesController.addLogo,
+  companiesController.addCompany, 
+  (req, res) => {
   res.status(200).json({
-    companyId: res.locals.companyID,
+    id: res.locals.companyId,
+    name: res.locals.name,
+    logo: res.locals.logo
   });
 });
 
