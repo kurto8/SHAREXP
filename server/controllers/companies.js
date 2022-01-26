@@ -11,10 +11,14 @@ companyController.getCompanies = (req, res, next) => {
   `;
   db.query(sql)
     .then((data) => {
+      console.log(data.rows);
       res.locals.companies = data.rows;
       return next();
     })
-    .catch((err) => next(err));
+    .catch((err) => {
+      console.log(err);
+      return next(err)
+    });
 };
 
 // adds logo and formatted company name to res.locals

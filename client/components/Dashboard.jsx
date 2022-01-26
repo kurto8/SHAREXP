@@ -30,36 +30,36 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 // }
 
 export default function Dashboard() {
-
-  const cards = [];
+  
+  // let cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  let cards = [{"id":15,"name":"REI","logo":"https://logo.clearbit.com/rei.com"},{"id":21,"name":"Jollibee","logo":"https://logo.clearbit.com/jollibeefoods.com"},{"id":22,"name":"sweetgreen","logo":"https://logo.clearbit.com/sweetgreen.com"},{"id":23,"name":"Atlassian","logo":"https://logo.clearbit.com/atlassian.com"},{"id":24,"name":"Vans","logo":"https://logo.clearbit.com/vans.com"}]
+  ;
   const theme = createTheme();
 
-  React.useEffect(() => {
-    fetch('/api/companies')
-      .then(jsonData => jsonData.json())
-      .then(data => {
-        cards = data.companies
-        console.log(cards);
-      })
-      .catch((err) => console.log(err))
-  })
-
-
   // React.useEffect(() => {
-  //   (async () => {
-  //     const jsonData = await fetch('/companies/api')
-  //     const data = jsonData.json();
-  //     cards = [data.companies]
-  //     console.log(cards);
-  //   })()
+  //   fetch('/api/companies')
+  //     .then((jsonData) => jsonData.json())
+  //     .then((data) => {
+  //       cards = data.companies;
+  //       console.log(cards);
+  //     })
+  //     .catch((err) => console.log(err));
   // }, []);
+
+  
+    // (async () => {
+    //   const jsonData = await fetch('/companies/api')
+    //   const data = jsonData.json();
+    //   cards = [data.companies]
+    //   console.log(cards);
+    // })()
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar position="relative">
+      <AppBar position='relative'>
         <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
+          <Typography variant='h6' color='inherit' noWrap>
             SHAREXP
           </Typography>
         </Toolbar>
@@ -71,63 +71,70 @@ export default function Dashboard() {
             bgcolor: 'background.paper',
             pt: 8,
             pb: 6,
-          }}
-        >
-          <Container maxWidth="sm">
+          }}>
+          <Container maxWidth='sm'>
             <Typography
-              component="h1"
-              variant="h2"
-              align="center"
-              color="text.primary"
-              gutterBottom
-            >
+              component='h1'
+              variant='h2'
+              align='center'
+              color='text.primary'
+              gutterBottom>
               Album layout
             </Typography>
-            <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              Something short and leading about the collection below—its contents,
-              the creator, etc. Make it short and sweet, but not too short so folks
-              don&apos;t simply skip over it entirely.
+            <Typography
+              variant='h5'
+              align='center'
+              color='text.secondary'
+              paragraph>
+              Something short and leading about the collection below—its
+              contents, the creator, etc. Make it short and sweet, but not too
+              short so folks don&apos;t simply skip over it entirely.
             </Typography>
             <Stack
               sx={{ pt: 4 }}
-              direction="row"
+              direction='row'
               spacing={2}
-              justifyContent="center"
-            >
-              <Button variant="contained">Main call to action</Button>
-              <Button variant="outlined">Secondary action</Button>
+              justifyContent='center'>
+              <Button variant='contained'>Main call to action</Button>
+              <Button variant='outlined'>Secondary action</Button>
             </Stack>
           </Container>
         </Box>
-        <Container sx={{ py: 8 }} maxWidth="md">
+        <Container sx={{ py: 8 }} maxWidth='md'>
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item id={id} key={card} xs={12} sm={6} md={4}>
+            {cards.map((card, i) => (
+              <Grid item key={i + 1} xs={12} sm={6} md={4}>
                 <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                >
+                  id={card.id}
+                  sx={{
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}>
                   <CardMedia
-                    component="img"
+                    component='img'
                     sx={{
-                      // 16:9
-                      pt: '56.25%',
+                      16: 9,
+                      // pt: '56.25%',
                     }}
+                    // image='https://source.unsplash.com/random'
                     image={card.logo}
-                    alt="random"
+                    // alt='random'
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
+                    <Typography gutterBottom variant='h5' component='h2'>
+                      {/* Heading */}
                       {card.name}
                     </Typography>
                     <Typography>
-                      This is a media card. You can use this section to describe the
-                      content.
+                      This is a media card. You can use this section to describe
+                      the content.
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
+                    <Button size='small'>View</Button>
+                    <Button size='small'>Edit</Button>
                   </CardActions>
                 </Card>
               </Grid>
@@ -136,16 +143,15 @@ export default function Dashboard() {
         </Container>
       </main>
       {/* Footer */}
-      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-        <Typography variant="h6" align="center" gutterBottom>
+      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component='footer'>
+        <Typography variant='h6' align='center' gutterBottom>
           Footer
         </Typography>
         <Typography
-          variant="subtitle1"
-          align="center"
-          color="text.secondary"
-          component="p"
-        >
+          variant='subtitle1'
+          align='center'
+          color='text.secondary'
+          component='p'>
           Something here to give the footer a purpose!
         </Typography>
         {/* <Copyright /> */}
