@@ -74,6 +74,30 @@ globalController.getLevelId = (req, res, next) => {
       .catch((err) => next(err));
 };
 
+// takes a cohort "invite_key" on request body and adds cohortId to res.locals
+globalController.getCohortId = (req, res, next) => {
+  const sql = `SELECT id FROM cohorts WHERE invite_key=$1
+    `;
+  const params = [req.body.inviteKey];
+  db.query(sql, params)
+    .then((data) => {
+      if (!data.rows[0]) {
+        const sql2 = `
+              INSERT INTO cohorts (invite_key) VALUES ($1) RETURNING id`;
+        db.query(sql2, params)
+          .then((data) => {
+            res.locals.cohortId = data.rows[0].id;
+            return next();
+          })
+          .catch((err) => next(err));
+      } else {
+        res.locals.cohortId = data.rows[0].id;
+        return next();
+      }
+    })
+    .catch((err) => next(err));
+};
+
 globalController.getAllEntries = (req, res, next) => {
   const sql = `
   SELECT l.name AS level_name, lo.name AS location_name, pt.name AS position_name, u.username AS author,

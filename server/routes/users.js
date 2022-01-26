@@ -1,9 +1,10 @@
 import express from "express";
 import usersController from "../controllers/users.js";
+import globalController from '../controllers/global.js';
 const router = express.Router();
 
 router.post("/login",
-usersController.getAllUsers,
+  usersController.checkIfUsernameExists,
   usersController.login,
   (req, res) => {
     console.log('logging from end of middleware chain in router: ', res.locals)
@@ -14,12 +15,14 @@ usersController.getAllUsers,
 });
 
 router.post("/signup",
-  usersController.getAllUsers,
+  usersController.checkIfUsernameExists,
+  globalController.getCohortId,
   usersController.signup,
   (req, res) => {
     console.log('logging from end of middleware chain in router: ', res.locals)
     res.status(200).json({
       userId: res.locals.userId,
+      avatar: res.locals.avatar,
       cookie: 'cookie'
     });
 });
