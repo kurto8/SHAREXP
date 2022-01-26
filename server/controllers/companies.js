@@ -7,7 +7,7 @@ const companyController = {};
 
 // gets all companies
 companyController.getCompanies = (req, res, next) => {
-  const sql = `SELECT * FROM "companies";
+  const sql = `SELECT * FROM "companies" ORDER BY "id" DESC;
   `;
   db.query(sql)
     .then((data) => {

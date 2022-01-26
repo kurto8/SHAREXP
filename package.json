@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"nodemon server/server.js\" \"webpack-dev-server --mode development\""
+    "dev": "concurrently \"server/server.js\" \"webpack-dev-server --mode development\""
   },
   "keywords": [],
   "author": "",
