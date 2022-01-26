@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url';
 // dotenv.config();
 
 import companiesRouter from './routes/companies.js';
+import globalRouter from './routes/global.js'
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -23,6 +24,8 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../index.html'));
 });
+
+app.use('/api/', globalRouter);
 
 app.use('/api/companies', companiesRouter);
 
