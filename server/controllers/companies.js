@@ -74,6 +74,7 @@ companyController.createEntry = (req, res, next) => {
   ];
 
   // what do we do with tags?? req.body.tags || null,
+  
   // db.query(sql, params)
   // .then((data) => {
   //   res.locals.postId = data.rows;
