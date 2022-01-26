@@ -74,6 +74,52 @@ globalController.getLevelId = (req, res, next) => {
       .catch((err) => next(err));
 };
 
+globalController.getAllEntries = (req, res, next) => {
+  const sql = `
+  SELECT l.name AS level_name, lo.name AS location_name, pt.name AS position_name, u.username AS author,
+         c.name as company_name, c.id as company_id, c.logo, p.title, p.time_posted
+  FROM posts p 
+    LEFT JOIN levels l
+      ON l.id = p.level_id
+    LEFT JOIN positions pt
+      ON pt.id = p.position_id
+    LEFT JOIN locations lo
+      ON lo.id = p.location_id
+    LEFT JOIN users u
+      ON u.id = p.user_id
+    LEFT JOIN companies c
+      ON c.id = p.company_id
+  `
+  db.query(sql)
+    .then((data) => {
+      res.locals.posts = data.rows.map(row => {
+        row.timePosted = new Date(row.time_posted);
+        row.username = row.user_name;
+        row.comapnyId = row.company_id;
+        row.locationName = row.location_name;
+        row.levelName = row.level_name;
+        row.positionName = row.position_name;
+        row.companyName = row.company_name;
+        row.companyId = row.company_id;
+        row.companyLogo = row.logo;
+        delete row.company_name;
+        delete row.company_id;
+        delete row.logo;
+        delete row.level_id;
+        delete row.level_name;
+        delete row.location_id;
+        delete row.location_name;
+        delete row.company_id;
+        delete row.user_id;
+        delete row.position_id;
+        delete row.position_name;
+        delete row.time_posted;
+        return row;
+      })
+      return next();
+    })
+    .catch(err => next(err));
+}
 export default globalController;
 
 /* <-- ~~**~~**~~**~~** SCRATCHPAD **~~**~~**~~**~~**~~ -->

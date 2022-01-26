@@ -135,20 +135,5 @@ companyController.getAllEntries = (req, res, next) => {
 export default companyController;
 
 /* <-- ~~**~~**~~**~~** SCRATCHPAD **~~**~~**~~**~~**~~ -->
- "id": 4,
-            "title": "Another Day",
-            "interview_questions": "Which tech CEO would win in a cage match?",
-            "notes": "I was very sleepy",
-            "pros": "clean desks",
-            "cons": "no snacks",
-            "salary_range": "$80-90k",
-            "red_flags": "Dirty carpet",
-            "make_anonymous": "true",
-            "time_posted": "2022-01-26T13:28:06.678Z",
-            "user_id": 4,
-            "company_id": 21,
-            "position_id": 2,
-            "location_id": 7,
-            "level_id": 1
 
 */ 
