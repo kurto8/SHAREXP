@@ -30,9 +30,18 @@ router.post("/:companyId",
   globalController.getLevelId, // save level id to res.locals
   companiesController.createEntry,
   (req, res) => {
-    console.log('logging from end of middleware chain in router: ', res.locals)
     res.status(200).json({
       postId: res.locals.postId
+    });
+});
+
+// handles get requests to a specific company - returns all entries for that company
+router.get("/:companyId",
+  companiesController.getAllEntries,
+  (req, res) => {
+    console.log('logging from end of middleware chain in router: ', res.locals)
+    res.status(200).json({
+      posts: res.locals.posts
     });
 });
 

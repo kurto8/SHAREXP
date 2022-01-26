@@ -84,9 +84,57 @@ companyController.createEntry = (req, res, next) => {
     .catch((err) => next(err));
 };
 
+// gets all entries from a specific company
+companyController.getAllEntries = (req, res, next) => {
+  const sql = `SELECT * FROM posts WHERE company_id=$1`;
+  const params = [ req.params.companyId ];
+  db.query(sql, params)
+    .then((data) => {
+      res.locals.posts = data.rows.map(row => {
+        row.interviewQuestions = row.interview_questions;
+        row.salaryRange = row.salary_range;
+        row.redFlags = row.red_flags;
+        row.makeAnonymous = row.make_anonymous;
+        row.timePosted = new Date(row.time_posted);
+        row.userId = row.user_id;
+        row.comapnyId = row.company_id;
+        row.locationId = row.location_id;
+        row.levelId = row.level_id;
+        row.positionId = row.position_id;
+        delete row.level_id;
+        delete row.location_id;
+        delete row.company_id;
+        delete row.user_id;
+        delete row.make_anonymous;
+        delete row.salary_range;
+        delete row.red_flags;
+        delete row.interview_questions;
+        delete row.position_id;
+        delete row.time_posted;
+        return row;
+      })
+      return next();
+    })
+    .catch(err => next(err));
+}
+
 export default companyController;
 
 /* <-- ~~**~~**~~**~~** SCRATCHPAD **~~**~~**~~**~~**~~ -->
-
+ "id": 4,
+            "title": "Another Day",
+            "interview_questions": "Which tech CEO would win in a cage match?",
+            "notes": "I was very sleepy",
+            "pros": "clean desks",
+            "cons": "no snacks",
+            "salary_range": "$80-90k",
+            "red_flags": "Dirty carpet",
+            "make_anonymous": "true",
+            "time_posted": "2022-01-26T13:28:06.678Z",
+            "user_id": 4,
+            "company_id": 21,
+            "position_id": 2,
+            "location_id": 7,
+            "level_id": 1
 
 */ 
