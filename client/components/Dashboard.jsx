@@ -29,19 +29,38 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 //   );
 // }
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-const theme = createTheme();
-
 export default function Dashboard() {
+
+  const cards = [];
+  const theme = createTheme();
+
+  React.useEffect(() => {
+    fetch('/api/companies')
+      .then(jsonData => jsonData.json())
+      .then(data => {
+        cards = data.companies
+        console.log(cards);
+      })
+      .catch((err) => console.log(err))
+  })
+
+
+  // React.useEffect(() => {
+  //   (async () => {
+  //     const jsonData = await fetch('/companies/api')
+  //     const data = jsonData.json();
+  //     cards = [data.companies]
+  //     console.log(cards);
+  //   })()
+  // }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
-          <CameraIcon sx={{ mr: 2 }} />
           <Typography variant="h6" color="inherit" noWrap>
-            Album layout
+            SHAREXP
           </Typography>
         </Toolbar>
       </AppBar>
@@ -84,7 +103,7 @@ export default function Dashboard() {
           {/* End hero unit */}
           <Grid container spacing={4}>
             {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+              <Grid item id={id} key={card} xs={12} sm={6} md={4}>
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
@@ -94,12 +113,12 @@ export default function Dashboard() {
                       // 16:9
                       pt: '56.25%',
                     }}
-                    image="https://source.unsplash.com/random"
+                    image={card.logo}
                     alt="random"
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Heading
+                      {card.name}
                     </Typography>
                     <Typography>
                       This is a media card. You can use this section to describe the
@@ -129,7 +148,7 @@ export default function Dashboard() {
         >
           Something here to give the footer a purpose!
         </Typography>
-        <Copyright />
+        {/* <Copyright /> */}
       </Box>
       {/* End footer */}
     </ThemeProvider>

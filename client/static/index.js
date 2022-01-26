@@ -14,10 +14,11 @@ ReactDOM.render(
   //<Provider store={store}>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />}></Route>
+        {/* <Route path="/" element={<App />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>
-        <Route path="/signup" element={<SignUp />}></Route>
+        <Route path="/signup" element={<SignUp />}></Route> */}
+        <Route path="/" element={<Dashboard />}></Route> 
         {/* <Route path="/main" element={<MainContainer />}></Route> */}
       </Routes>
     </BrowserRouter>,
