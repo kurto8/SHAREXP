@@ -50,8 +50,8 @@ globalController.getPositionId = (req, res, next) => {
       .catch((err) => next(err));
 };
 
-  // takes a level "name" on request body and adds levelID to res.locals
-  globalController.getLevelId = (req, res, next) => {
+// takes a level "name" on request body and adds levelID to res.locals
+globalController.getLevelId = (req, res, next) => {
     const sql = `SELECT id FROM levels WHERE name=$1
       `;
     const params = [req.body.level];
