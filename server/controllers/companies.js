@@ -90,30 +90,40 @@ companyController.createEntry = (req, res, next) => {
 
 // gets all entries from a specific company
 companyController.getAllEntries = (req, res, next) => {
-  const sql = `SELECT * FROM posts WHERE company_id=$1`;
+  const sql = `
+  SELECT l.name AS level_name, lo.name AS location_name, pt.name AS position_name, u.username AS author, u.id AS user_id,
+         p.title, p.time_posted, p.id
+  FROM posts p 
+    LEFT JOIN levels l
+      ON l.id = p.level_id
+    LEFT JOIN positions pt
+      ON pt.id = p.position_id
+    LEFT JOIN locations lo
+      ON lo.id = p.location_id
+    LEFT JOIN users u
+      ON u.id = p.user_id
+  WHERE p.company_id = $1
+  `
   const params = [ req.params.companyId ];
   db.query(sql, params)
     .then((data) => {
       res.locals.posts = data.rows.map(row => {
-        row.interviewQuestions = row.interview_questions;
-        row.salaryRange = row.salary_range;
-        row.redFlags = row.red_flags;
-        row.makeAnonymous = row.make_anonymous;
         row.timePosted = new Date(row.time_posted);
+        row.username = row.user_name;
         row.userId = row.user_id;
         row.comapnyId = row.company_id;
-        row.locationId = row.location_id;
-        row.levelId = row.level_id;
-        row.positionId = row.position_id;
+        row.locationName = row.location_name;
+        row.levelName = row.level_name;
+        row.positionName = row.position_name;
+        delete row.user_name;
         delete row.level_id;
+        delete row.level_name;
         delete row.location_id;
+        delete row.location_name;
         delete row.company_id;
         delete row.user_id;
-        delete row.make_anonymous;
-        delete row.salary_range;
-        delete row.red_flags;
-        delete row.interview_questions;
         delete row.position_id;
+        delete row.position_name;
         delete row.time_posted;
         return row;
       })
