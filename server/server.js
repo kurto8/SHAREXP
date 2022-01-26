@@ -2,13 +2,12 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-
 // import dotenv from 'dotenv';
 // dotenv.config();
 
 import companiesRouter from './routes/companies.js';
 import globalRouter from './routes/global.js'
-
+import usersRouter from './routes/users.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,8 +25,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/', globalRouter);
-
 app.use('/api/companies', companiesRouter);
+app.use('/api/users', usersRouter);
 
 // route all other calls to 404 error handler
 app.use((req, res) => res.status(404).json('Endpoint could not be found'));
