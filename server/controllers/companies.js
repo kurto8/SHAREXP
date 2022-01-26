@@ -55,7 +55,9 @@ companyController.addCompany = (req, res, next) => {
 // creates a new entry
 companyController.createEntry = (req, res, next) => {
   const sql =
-  `INSERT INTO posts COLUMNS (company_id, title, interview_questions, user_id, salary_range, red_flags, make_anonymous, pros, cons, notes, location_id, position_id, level_id)
+  `INSERT INTO posts (company_id, title, interview_questions, user_id, salary_range, red_flags, make_anonymous, pros, cons, notes, location_id, position_id, level_id, time_posted)
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, NOW())
+  RETURNING id
   `
   const params = [
     req.params.companyId, 
@@ -69,19 +71,17 @@ companyController.createEntry = (req, res, next) => {
     req.body.cons || null,
     req.body.notes || null,
     res.locals.locationId,
-    res.locals.position, 
-    res.locals.level,
+    res.locals.positionId, 
+    res.locals.levelId,
   ];
-
   // what do we do with tags?? req.body.tags || null,
-  
-  // db.query(sql, params)
-  // .then((data) => {
-  //   res.locals.postId = data.rows;
-  //   return next();
-  //   })
-  //   .catch((err) => next(err));
-  return next();
+
+  db.query(sql, params)
+  .then((data) => {
+    res.locals.postId = data.rows[0].id;
+    return next();
+    })
+    .catch((err) => next(err));
 };
 
 export default companyController;
