@@ -109,7 +109,6 @@ companyController.getAllEntries = (req, res, next) => {
     .then((data) => {
       res.locals.posts = data.rows.map(row => {
         row.timePosted = new Date(row.time_posted);
-        row.username = row.user_name;
         row.userId = row.user_id;
         row.comapnyId = row.company_id;
         row.locationName = row.location_name;

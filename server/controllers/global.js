@@ -92,7 +92,7 @@ globalController.getAllEntries = (req, res, next) => {
   `
   db.query(sql)
     .then((data) => {
-      res.locals.posts = data.rows.map(row => {
+      res.locals.posts = data.rows.map(row => {           // renaming data
         row.timePosted = new Date(row.time_posted);
         row.username = row.user_name;
         row.comapnyId = row.company_id;
