@@ -98,7 +98,7 @@ export default function Dashboard() {
       <AppBar position='relative'>
         <Toolbar>
           <Typography variant='h6' color='inherit' noWrap>
-            SHAREXP
+            SHAREXP - LA COHORT 47
           </Typography>
         </Toolbar>
       </AppBar>
@@ -166,7 +166,8 @@ export default function Dashboard() {
                       </Typography> */}
                     </CardContent>
                     <CardActions>
-                      <Link to={'/rei'}>
+                      <Link to={`/dashboard/${card.name}/${card.id}`}>
+                      {/* <Link to={`/companies/${card.name}`}> */}
                         <Button size='small'>SEE REVIEWS</Button>
                         {/* <Button size='small'>Edit</Button> */}
                       </Link>

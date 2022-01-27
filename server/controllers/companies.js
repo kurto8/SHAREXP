@@ -92,7 +92,7 @@ companyController.createEntry = (req, res, next) => {
 companyController.getAllEntries = (req, res, next) => {
   const sql = `
   SELECT l.name AS level_name, lo.name AS location_name, pt.name AS position_name, u.username AS author, u.id AS user_id,
-         p.title, p.time_posted, p.id
+         p.title, p.time_posted, p.id, p.salary_range
   FROM posts p 
     LEFT JOIN levels l
       ON l.id = p.level_id
@@ -114,6 +114,7 @@ companyController.getAllEntries = (req, res, next) => {
         row.locationName = row.location_name;
         row.levelName = row.level_name;
         row.positionName = row.position_name;
+        row.salaryRange = row.salary_range;
         delete row.user_name;
         delete row.level_id;
         delete row.level_name;
@@ -124,6 +125,7 @@ companyController.getAllEntries = (req, res, next) => {
         delete row.position_id;
         delete row.position_name;
         delete row.time_posted;
+        delete row.salary_range;
         return row;
       })
       return next();

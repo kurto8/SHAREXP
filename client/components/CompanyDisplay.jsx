@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useParams } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
@@ -23,30 +24,15 @@ import TableRow from '@mui/material/TableRow';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
-export default function REI({comapnyId}) {
-  // let cards = [
-  //   { id: 15, name: 'REI', logo: 'https://logo.clearbit.com/rei.com' },
-  //   {
-  //     id: 21,
-  //     name: 'Jollibee',
-  //     logo: 'https://logo.clearbit.com/jollibeefoods.com',
-  //   },
-  //   {
-  //     id: 22,
-  //     name: 'sweetgreen',
-  //     logo: 'https://logo.clearbit.com/sweetgreen.com',
-  //   },
-  //   {
-  //     id: 23,
-  //     name: 'Atlassian',
-  //     logo: 'https://logo.clearbit.com/atlassian.com',
-  //   },
-  //   { id: 24, name: 'Vans', logo: 'https://logo.clearbit.com/vans.com' },
-  // ];
+export default function CompanyDisplay() {
 
+  // const location = useLocation();
   const [cards, setCards] = React.useState([]);
   const theme = createTheme();
-  const companyId = { companyId }
+
+  // const { companyId } = location.state
+  // const companyId = {companyId}
+  const { companyId, companyName } = useParams();
   React.useEffect(() => {
     fetch(`/api/companies/${companyId}`)
       .then((response) => response.json())
@@ -69,7 +55,7 @@ export default function REI({comapnyId}) {
       <AppBar position='relative'>
         <Toolbar>
           <Typography variant='h6' color='inherit' noWrap>
-            SHAREXP
+            SHAREXP - LA COHORT 47
           </Typography>
         </Toolbar>
       </AppBar>
@@ -88,7 +74,7 @@ export default function REI({comapnyId}) {
               align='center'
               color='text.primary'
               gutterBottom>
-              "Company" review
+              {companyName} review
             </Typography>
             <Stack
               sx={{ pt: 4 }}
@@ -106,16 +92,16 @@ export default function REI({comapnyId}) {
             {!cards && <>Still Loading.....</>}
             {cards &&
               cards.map((card, i) => (
-                <Grid item key={i + 1} xs={12}>
+                <Grid item key={i + 1} xs={16}>
                   <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                     <Typography
                       variant='h5'
                       align='center'
                       color='text.secondary'
                       paragraph>
-                      Title of Review
+                      {card.title}
                     </Typography>
-                    <Table size="small">
+                    <Table size="large">
                       <TableHead>
                         <TableRow>
                           <TableCell>Date</TableCell>
@@ -127,7 +113,14 @@ export default function REI({comapnyId}) {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        Insert Stuff Here
+                        <TableRow>
+                          <TableCell>{card.timePosted}</TableCell>
+                          <TableCell>{card.author}</TableCell>
+                          <TableCell>{card.levelName}-level {card.positionName}</TableCell>
+                          <TableCell>{card.salaryRange}</TableCell>
+                          <TableCell>{card.locationName}</TableCell>
+                          <TableCell align="right">UPVOTES(?)</TableCell>
+                        </TableRow>
                       </TableBody>
                     </Table>
                     <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
@@ -142,14 +135,14 @@ export default function REI({comapnyId}) {
       {/* Footer */}
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component='footer'>
         <Typography variant='h6' align='center' gutterBottom>
-          Footer
+          SPILL THE TEA !!!
         </Typography>
         <Typography
           variant='subtitle1'
           align='center'
           color='text.secondary'
           component='p'>
-          Something here to give the footer a purpose!
+          Please add more reviews to strengthen our network
         </Typography>
         {/* <Copyright /> */}
       </Box>
