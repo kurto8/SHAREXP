@@ -7,18 +7,21 @@ import App from "../components/App.jsx";
 import Login from "../components/Login.jsx";
 import Dashboard from "../components/Dashboard.jsx";
 import SignUp from '../components/SignUp.jsx';
-
+import REI from '../components/REI.jsx'
+import CompanyDisplay from "../components/CompanyDisplay.jsx";
 import "./styles.css"
 
 ReactDOM.render(
   //<Provider store={store}>
     <BrowserRouter>
       <Routes>
-        {/* <Route path="/" element={<App />}></Route>
+        <Route path="/" element={<App />}></Route>
         <Route path="/login" element={<Login />}></Route>
+        <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>
-        <Route path="/signup" element={<SignUp />}></Route> */}
-        <Route path="/" element={<Dashboard />}></Route> 
+        <Route path="/rei" element={<REI />}></Route>
+        <Route path="/dashboard/:companyName/:companyId" element={<CompanyDisplay />}></Route>
+        {/* <Route path="/" element={<Dashboard />}></Route>  */}
         {/* <Route path="/main" element={<MainContainer />}></Route> */}
       </Routes>
     </BrowserRouter>,

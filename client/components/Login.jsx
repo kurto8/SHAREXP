@@ -1,18 +1,5 @@
-// import React, { useState, useEffect } from "react";
+
 import { Link } from "react-router-dom";
-
-// const Login = () => {
-//   const [username, setUsername] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [userLoggedIn, setUserLoggedIn] = useState(false);
-//   const [passwordState, setPasswordState] = useState('password');
-
-//   return (
-//     <div>
-//       Hello World
-//     </div>
-//   )
-// }
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -28,22 +15,28 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-// function Copyright(props) {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         SHAREXP
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
-
 const theme = createTheme();
 
 export default function Login() {
+  // const [username, setUsername] = React.useState("");
+  // const [password, setPassword] = React.useState("");
+  // const [userLoggedIn, setUserLoggedIn] = React.useState(false);
+  // const [passwordState, setPasswordState] = React.useState('password');
+
+  // const handleLogin = (username, password) => {
+  //   fetch('/api/login', {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify({
+  //       username,
+  //       passwordUser: password,
+  //     })
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => handleUserFetch(data))
+  //     .catch((err) => console.log(err));
+  // };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -70,7 +63,7 @@ export default function Login() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            SHAREXP
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -81,7 +74,9 @@ export default function Login() {
               label="Email Address"
               name="email"
               autoComplete="email"
-              autoFocus
+              // value={username}
+              // onChange={(e) => setUsername(e.target.value)}
+              // autoFocus
             />
             <TextField
               margin="normal"
@@ -89,9 +84,12 @@ export default function Login() {
               fullWidth
               name="password"
               label="Password"
-              type="password"
               id="password"
               autoComplete="current-password"
+              type="password"
+              // type={passwordState}
+              // value={password}
+              // onChange={(e) => setPassword(e.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -103,6 +101,7 @@ export default function Login() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                // onClick={() => handleLogin(username, password)}
               >
                 Sign In
               </Button>
