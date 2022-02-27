@@ -70,7 +70,8 @@ export default function Dashboard() {
   function promptBox() {
     let text;
     let company = prompt("Please enter new company name:", "");
-    if (company !== null || company !== "") {
+    // if (company !== null || company !== "") {
+    if (!company) {
       text = "Please enter a valid Company name.";
       fetch('/api/companies', {
         method: 'POST',

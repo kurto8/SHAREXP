@@ -1,5 +1,5 @@
 import express from "express";
-import globalController from "../controllers/global.js";
+import globalController from "../controllers/globalCntrl.js";
 const router = express.Router();
 
 router.get("/all",

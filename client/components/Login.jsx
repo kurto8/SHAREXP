@@ -1,5 +1,4 @@
-
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -49,7 +48,7 @@ export default function Login() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component='main' maxWidth='xs'>
         <CssBaseline />
         <Box
           sx={{
@@ -57,67 +56,91 @@ export default function Login() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-          }}
-        >
+          }}>
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component='h1' variant='h5'>
             SHAREXP
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box
+            component='form'
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}>
             <TextField
-              margin="normal"
+              margin='normal'
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id='email'
+              label='Email Address'
+              name='email'
+              autoComplete='email'
               // value={username}
               // onChange={(e) => setUsername(e.target.value)}
               // autoFocus
             />
             <TextField
-              margin="normal"
+              margin='normal'
               required
               fullWidth
-              name="password"
-              label="Password"
-              id="password"
-              autoComplete="current-password"
-              type="password"
+              name='password'
+              label='Password'
+              id='password'
+              autoComplete='current-password'
+              type='password'
               // type={passwordState}
               // value={password}
               // onChange={(e) => setPassword(e.target.value)}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              control={<Checkbox value='remember' color='primary' />}
+              label='Remember me'
             />
-            <Link to={"/dashboard"}>
+            <Link to={'/dashboard'} style={{textDecoration: 'none'}}>
               <Button
-                type="submit"
+                type='submit'
                 fullWidth
-                variant="contained"
+                variant='contained'
                 sx={{ mt: 3, mb: 2 }}
                 // onClick={() => handleLogin(username, password)}
               >
                 Sign In
               </Button>
             </Link>
-            <Grid container>
-              {/* <Grid item xs>
+            <br />
+            <hr width='82%'/>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+              >
+              Don't have an account?...
+            </Box>
+            <Link to={'/signup'} style={{textDecoration: 'none', mt: 0}}>
+              <Button
+                type='submit'
+                fullWidth
+                variant='contained'
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign Up Here
+              </Button>
+            </Link>
+            {/* <Grid container>
+              <Grid item xs>
                 <Link to={"/dashboard"} variant="body2">
                   Forgot password?
                 </Link>
-              </Grid> */}
+              </Grid>
               <Grid item>
-                <Link to={"/signup"} variant="body2">
+                <Link to={'/signup'} variant='body2'>
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
-            </Grid>
+            </Grid> */}
           </Box>
         </Box>
         {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}

@@ -1,6 +1,6 @@
 import express from "express";
-import companiesController from "../controllers/companies.js";
-import globalController from "../controllers/global.js";
+import companiesController from "../controllers/companiesCntrl.js";
+import globalController from "../controllers/globalCntrl.js";
 const router = express.Router();
 
 // handles get requests to companies
@@ -23,7 +23,7 @@ router.post("/",
   });
 });
 
-// handles post requests to a specific company - creates an entry
+// handles post requests to a specific company - adding a company review
 router.post("/:companyId",
   globalController.getLocationId, // save location id to res.locals
   globalController.getPositionId, // save postion id to res.locals

@@ -5,9 +5,9 @@ import { fileURLToPath } from 'url';
 // import dotenv from 'dotenv';
 // dotenv.config();
 
-import companiesRouter from './routes/companies.js';
-import globalRouter from './routes/global.js'
-import usersRouter from './routes/users.js'
+import companiesRouter from './routes/companiesRtr.js';
+import globalRouter from './routes/globalRtr.js'
+import usersRouter from './routes/usersRtr.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

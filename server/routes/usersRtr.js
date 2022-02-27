@@ -1,6 +1,6 @@
 import express from "express";
-import usersController from "../controllers/users.js";
-import globalController from '../controllers/global.js';
+import usersController from "../controllers/usersCntrl.js";
+import globalController from '../controllers/globalCntrl.js';
 const router = express.Router();
 
 router.post("/login",
