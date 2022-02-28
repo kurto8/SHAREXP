@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { useParams } from 'react-router-dom'
+import React, { Component, useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
@@ -22,32 +22,63 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import { FamilyRestroomOutlined } from '@mui/icons-material';
+// import ReviewModal from './Modal.jsx';
+// import ErrorBoundary from './ErrorBoundary.jsx';
 
 export default function CompanyDisplay() {
-
-  // const location = useLocation();
-  const [cards, setCards] = React.useState([]);
+  const [cards, setCards] = useState([]);
+  const [modal, showModal] = useState('false');
+  const [loading, setLoading] = useState('true');
+  const { companyId, companyName } = useParams();
   const theme = createTheme();
 
-  // const { companyId } = location.state
-  // const companyId = {companyId}
-  const { companyId, companyName } = useParams();
-  React.useEffect(() => {
+  useEffect(() => {
     fetch(`/api/companies/${companyId}`)
       .then((response) => response.json())
       .then((dataObj) => {
         let compArr = dataObj.posts;
         setCards(dataObj.posts);
+        setLoading(false);
         console.log(compArr);
-        console.log(cards);
       })
       .catch((err) => console.log(err));
   }, []);
 
+  function toggleModal() {
+    showModal(modal === false ? true : false);
+  }
+
   function preventDefault(event) {
     event.preventDefault();
   }
+
+  // class CompanyDisplay extends Component {
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     loading: true,
+  //     cards: [],
+  //     showModal: false,
+  //   };
+  // }
+
+  // async componentDidMount() {
+  //   const { companyId, companyName } = useParams();
+  //   const res = await fetch(`/api/companies/${companyId}`);
+  //   const dataObj = await res.json();
+  //   this.setState({
+  //     loading: false,
+  //     cards: dataObj.posts,
+  //   });
+  // }
+
+  // toggleModal = () =>
+  //   this.setState({ showModal: !this.state.showModal ? true : false });
+
+  // render() {
+  //   const theme = createTheme();
+  //   const { cards } = this.state;
 
   return (
     <ThemeProvider theme={theme}>
@@ -55,7 +86,7 @@ export default function CompanyDisplay() {
       <AppBar position='relative'>
         <Toolbar>
           <Typography variant='h6' color='inherit' noWrap>
-            SHAREXP - LA COHORT 47
+            SHAREXP
           </Typography>
         </Toolbar>
       </AppBar>
@@ -74,14 +105,16 @@ export default function CompanyDisplay() {
               align='center'
               color='text.primary'
               gutterBottom>
-              {companyName} review
+              {companyName} Reviews
             </Typography>
             <Stack
               sx={{ pt: 4 }}
               direction='row'
               spacing={2}
               justifyContent='center'>
-              <Button variant='contained'>Add New Review</Button>
+              <Button variant='contained' onClick={toggleModal}>
+                Add New Review
+              </Button>
               {/* <Button variant='outlined'>Secondary action</Button> */}
             </Stack>
           </Container>
@@ -93,15 +126,16 @@ export default function CompanyDisplay() {
             {cards &&
               cards.map((card, i) => (
                 <Grid item key={i + 1} xs={16}>
-                  <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                  <Paper
+                    sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                     <Typography
                       variant='h5'
                       align='center'
                       color='text.secondary'
                       paragraph>
-                      {card.title}
+                      Review Title: {card.title}
                     </Typography>
-                    <Table size="large">
+                    <Table size='large'>
                       <TableHead>
                         <TableRow>
                           <TableCell>Date</TableCell>
@@ -109,21 +143,27 @@ export default function CompanyDisplay() {
                           <TableCell>Position</TableCell>
                           <TableCell>Salary Range</TableCell>
                           <TableCell>Job Location</TableCell>
-                          <TableCell align="right">UPVOTES(?)</TableCell>
+                          <TableCell align='right'>Upvotes</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
                         <TableRow>
-                          <TableCell>{card.timePosted}</TableCell>
+                          <TableCell>{card.timePosted.slice(0, 10)}</TableCell>
                           <TableCell>{card.author}</TableCell>
-                          <TableCell>{card.levelName}-level {card.positionName}</TableCell>
+                          <TableCell>
+                            {card.levelName}-level {card.positionName}
+                          </TableCell>
                           <TableCell>{card.salaryRange}</TableCell>
                           <TableCell>{card.locationName}</TableCell>
-                          <TableCell align="right">UPVOTES(?)</TableCell>
+                          <TableCell align='right'>👍 6 👎</TableCell>
                         </TableRow>
                       </TableBody>
                     </Table>
-                    <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
+                    <Link
+                      color='primary'
+                      href='#'
+                      onClick={preventDefault}
+                      sx={{ mt: 3 }}>
                       See more details
                     </Link>
                   </Paper>
@@ -146,7 +186,27 @@ export default function CompanyDisplay() {
         </Typography>
         {/* <Copyright /> */}
       </Box>
+      {/* {modal ? (
+        <ReviewModal>
+          <div>
+            <h1>AM I MODALING???</h1>
+            <button onClick={toggleModal}>Submit Review</button>
+          </div>
+        </ReviewModal>
+      ) : null} */}
       {/* End footer */}
-    </ThemeProvider >
+    </ThemeProvider>
   );
 }
+
+// // HIGHER ORDER COMPONENT
+// const DetailsWithRouter = withRouter(CompanyDisplay);
+
+// // Example of nested HIGHER ORDER COMPONENTS
+// export default function DetailsWithErrorBoundary() {
+//   return (
+//     <ErrorBoundary>
+//       <DetailsWithRouter />
+//     </ErrorBoundary>
+//   );
+// }

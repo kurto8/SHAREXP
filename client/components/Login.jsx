@@ -97,35 +97,33 @@ export default function Login() {
               control={<Checkbox value='remember' color='primary' />}
               label='Remember me'
             />
-            <Link to={'/dashboard'} style={{textDecoration: 'none'}}>
+            <Link to={'/dashboard'} style={{ textDecoration: 'none' }}>
               <Button
                 type='submit'
                 fullWidth
                 variant='contained'
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 3, mb: 4 }}
                 // onClick={() => handleLogin(username, password)}
               >
                 Sign In
               </Button>
             </Link>
             <br />
-            <hr width='82%'/>
             <Box
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-              }}
-              >
+              }}>
               Don't have an account?...
             </Box>
-            <Link to={'/signup'} style={{textDecoration: 'none', mt: 0}}>
+                <hr width='67%' />
+            <Link to={'/signup'} style={{ textDecoration: 'none', mt: 0 }}>
               <Button
                 type='submit'
                 fullWidth
                 variant='contained'
-                sx={{ mt: 3, mb: 2 }}
-              >
+                sx={{ mt: 1, mb: 2 }}>
                 Sign Up Here
               </Button>
             </Link>

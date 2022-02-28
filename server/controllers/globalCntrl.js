@@ -2,7 +2,7 @@ import db from "../models/dataModel.js";
 
 const globalController = {};
 
-// takes a loction name on request body and adds locationID to res.locals
+// takes a location name on request body and adds locationID to res.locals
 globalController.getLocationId = (req, res, next) => {
   const sql = `SELECT id FROM locations WHERE name=$1
     `;
@@ -146,7 +146,7 @@ globalController.getAllEntries = (req, res, next) => {
 }
 export default globalController;
 
-/* <-- ~~**~~**~~**~~** SCRATCHPAD **~~**~~**~~**~~**~~ -->
+/* <-- ~~**~~**~~**~~**~~** SCRATCHPAD **~~**~~**~~**~~**~~ -->
 
 
 */ 
