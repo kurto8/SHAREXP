@@ -7,26 +7,26 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Login from '../components/Login.jsx';
 import Dashboard from '../components/Dashboard.jsx';
 import SignUp from '../components/SignUp.jsx';
-import REI from '../components/REI.jsx';
 import CompanyDisplay from '../components/CompanyDisplay.jsx';
 import '../static/styles.css';
 
 const App = () => {
   const theme = createTheme();
-
   return (
     //<Provider store={store}>
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Login />}></Route>
-          <Route path='/signup' element={<SignUp />}></Route>
-          <Route path='/dashboard' element={<Dashboard />}></Route>
-          <Route
-            path='/dashboard/:companyName/:companyId'
-            element={<CompanyDisplay />}></Route>
-        </Routes>
-      </BrowserRouter>
+      <div>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/signup' element={<SignUp />}></Route>
+            <Route path='/dashboard' element={<Dashboard />}></Route>
+            <Route
+              path='/dashboard/:companyName/:companyId'
+              element={<CompanyDisplay />}></Route>
+            <Route path='/' element={<Login />}></Route>
+          </Routes>
+        </BrowserRouter>
+      </div>
     </ThemeProvider>
     //</Provider>
   );

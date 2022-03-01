@@ -23,15 +23,18 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FamilyRestroomOutlined } from '@mui/icons-material';
-// import ReviewModal from './Modal.jsx';
-// import ErrorBoundary from './ErrorBoundary.jsx';
+import ReviewModal from './Modal.jsx';
+import ErrorBoundary from './ErrorBoundary.jsx';
+// import { Portal } from '@mui/material';
 
-export default function CompanyDisplay() {
+function CompanyDisplay() {
   const [cards, setCards] = useState([]);
-  const [modal, showModal] = useState('false');
-  const [loading, setLoading] = useState('true');
+  const [modal, showModal] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { companyId, companyName } = useParams();
   const theme = createTheme();
+  // const modalRoot = document.getElementById('modal');
+  // console.log(modalRoot);
 
   useEffect(() => {
     fetch(`/api/companies/${companyId}`)
@@ -46,7 +49,8 @@ export default function CompanyDisplay() {
   }, []);
 
   function toggleModal() {
-    showModal(modal === false ? true : false);
+    console.log('showModal:', modal);
+    showModal(!modal ? true : false);
   }
 
   function preventDefault(event) {
@@ -54,34 +58,35 @@ export default function CompanyDisplay() {
   }
 
   // class CompanyDisplay extends Component {
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     loading: true,
-  //     cards: [],
-  //     showModal: false,
-  //   };
-  // }
+  //   constructor() {
+  //     super();
+  //     this.state = {
+  //       loading: true,
+  //       cards: [],
+  //       showModal: false,
+  //     };
+  //   }
 
-  // async componentDidMount() {
-  //   const { companyId, companyName } = useParams();
-  //   const res = await fetch(`/api/companies/${companyId}`);
-  //   const dataObj = await res.json();
-  //   this.setState({
-  //     loading: false,
-  //     cards: dataObj.posts,
-  //   });
-  // }
+  //   async componentDidMount() {
+  //     const { companyId, companyName } = useParams();
+  //     const res = await fetch(`/api/companies/${companyId}`);
+  //     const dataObj = await res.json();
+  //     this.setState({
+  //       loading: false,
+  //       cards: dataObj.posts,
+  //     });
+  //   }
 
-  // toggleModal = () =>
-  //   this.setState({ showModal: !this.state.showModal ? true : false });
+  //   toggleModal = () =>
+  //     this.setState({ showModal: !this.state.showModal ? true : false });
 
-  // render() {
-  //   const theme = createTheme();
-  //   const { cards } = this.state;
+  //   render() {
+  //     const theme = createTheme();
+  //     const { cards } = this.state;
 
   return (
-    <ThemeProvider theme={theme}>
+    <div>
+      {/* <ThemeProvider theme={theme}> */}
       <CssBaseline />
       <AppBar position='relative'>
         <Toolbar>
@@ -122,10 +127,18 @@ export default function CompanyDisplay() {
         <Container sx={{ py: 8 }} maxWidth='md'>
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {!cards && <>Still Loading.....</>}
-            {cards &&
-              cards.map((card, i) => (
-                <Grid item key={i + 1} xs={16}>
+            {loading ? (
+              <Grid
+                sx={{
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}>
+                <h1>Loading...</h1>
+              </Grid>
+            ) : (
+              cards.map((card) => (
+                <Grid item key={card.id} xs={16}>
                   <Paper
                     sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                     <Typography
@@ -168,7 +181,8 @@ export default function CompanyDisplay() {
                     </Link>
                   </Paper>
                 </Grid>
-              ))}
+              ))
+            )}
           </Grid>
         </Container>
       </main>
@@ -186,27 +200,27 @@ export default function CompanyDisplay() {
         </Typography>
         {/* <Copyright /> */}
       </Box>
-      {/* {modal ? (
-        <ReviewModal>
-          <div>
-            <h1>AM I MODALING???</h1>
-            <button onClick={toggleModal}>Submit Review</button>
-          </div>
-        </ReviewModal>
-      ) : null} */}
       {/* End footer */}
-    </ThemeProvider>
+      {modal ? (
+        // <Portal container={modalRoot}>
+        <ReviewModal>
+          <h1>AM I MODALING???</h1>
+          <Button onClick={toggleModal}>Submit Review</Button>
+        </ReviewModal>
+      ) : null}
+      {/* </Portal> */}
+      {/* </ThemeProvider> */}
+    </div>
   );
 }
 
-// // HIGHER ORDER COMPONENT
-// const DetailsWithRouter = withRouter(CompanyDisplay);
+// export default CompanyDisplay;
 
-// // Example of nested HIGHER ORDER COMPONENTS
-// export default function DetailsWithErrorBoundary() {
-//   return (
-//     <ErrorBoundary>
-//       <DetailsWithRouter />
-//     </ErrorBoundary>
-//   );
-// }
+// Example of nested HIGHER ORDER COMPONENTS
+export default function CompanyDisplayWithErrorBoundary() {
+  return (
+    <ErrorBoundary>
+      <CompanyDisplay />
+    </ErrorBoundary>
+  );
+}

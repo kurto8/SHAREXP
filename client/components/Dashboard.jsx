@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
@@ -13,12 +13,12 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-// import Link from '@mui/material/Link';
 import { Link } from 'react-router-dom';
 // import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-export default function Dashboard({ theme }) {
-  const [cards, setCards] = React.useState([]);
+export default function Dashboard() {
+  const [loading, setLoading] = useState(true);
+  const [cards, setCards] = useState([]);
   // const theme = createTheme();
 
   function renderCards() {
@@ -26,13 +26,14 @@ export default function Dashboard({ theme }) {
       .then((response) => response.json())
       .then((dataObj) => {
         let compArr = dataObj.companies;
-        setCards(dataObj.companies);
+        setCards(compArr);
+        setLoading(false);
         console.log(compArr);
       })
       .catch((err) => console.log(err));
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     renderCards();
   }, []);
 
@@ -62,7 +63,8 @@ export default function Dashboard({ theme }) {
   }
 
   return (
-    <div theme={theme}>
+    <div>
+      {/* <ThemeProvider theme={theme}> */}
       <CssBaseline />
       <AppBar position='relative'>
         <Toolbar>
@@ -103,10 +105,18 @@ export default function Dashboard({ theme }) {
         <Container sx={{ py: 8 }} maxWidth='md'>
           {/* End hero unit */}
           <Grid className='companies' container spacing={4}>
-            {!cards && <>Still Loading.....</>}
-            {cards &&
-              cards.map((card, i) => (
-                <Grid item key={i + 1} xs={12} sm={6} md={4}>
+            {loading ? (
+              <Grid
+                sx={{
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}>
+                <h1>Loading...</h1>
+              </Grid>
+            ) : (
+              cards.map((card) => (
+                <Grid item key={card.id} xs={12} sm={6} md={4}>
                   <Card
                     id={card.id}
                     sx={{
@@ -134,14 +144,13 @@ export default function Dashboard({ theme }) {
                       <Link
                         to={`/dashboard/${card.name}/${card.id}`}
                         style={{ textDecoration: 'none' }}>
-                        {/* <Link to={`/companies/${card.name}`}> */}
                         <Button size='small'>SEE REVIEWS</Button>
-                        {/* <Button size='small'>Edit</Button> */}
                       </Link>
                     </CardActions>
                   </Card>
                 </Grid>
-              ))}
+              ))
+            )}
           </Grid>
         </Container>
       </main>
@@ -159,6 +168,7 @@ export default function Dashboard({ theme }) {
         </Typography>
       </Box>
       {/* End footer */}
+      {/* </ThemeProvider> */}
     </div>
   );
 }
