@@ -23,8 +23,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FamilyRestroomOutlined } from '@mui/icons-material';
-import ReviewModal from './Modal.jsx';
-import ErrorBoundary from './ErrorBoundary.jsx';
+import Modal from './Modal';
+import ReviewEntry from './ReviewEntry';
+import ErrorBoundary from './ErrorBoundary';
 // import { Portal } from '@mui/material';
 
 function CompanyDisplay() {
@@ -124,20 +125,17 @@ function CompanyDisplay() {
             </Stack>
           </Container>
         </Box>
+        {/* End hero unit */}
         <Container sx={{ py: 8 }} maxWidth='md'>
-          {/* End hero unit */}
-          <Grid container spacing={4}>
-            {loading ? (
-              <Grid
-                sx={{
-                  width: '100%',
-                  display: 'flex',
-                  justifyContent: 'center',
-                }}>
-                <h1>Loading...</h1>
-              </Grid>
-            ) : (
-              cards.map((card) => (
+          {loading ? (
+            <Box>
+              <Typography component='h1' variant='h4' align='center'>
+                Loading...
+              </Typography>
+            </Box>
+          ) : (
+            <Grid container spacing={4}>
+              {cards.map((card) => (
                 <Grid item key={card.id} xs={16}>
                   <Paper
                     sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
@@ -181,9 +179,9 @@ function CompanyDisplay() {
                     </Link>
                   </Paper>
                 </Grid>
-              ))
-            )}
-          </Grid>
+              ))}
+            </Grid>
+          )}
         </Container>
       </main>
       {/* Footer */}
@@ -203,10 +201,12 @@ function CompanyDisplay() {
       {/* End footer */}
       {modal ? (
         // <Portal container={modalRoot}>
-        <ReviewModal>
-          <h1>AM I MODALING???</h1>
-          <Button onClick={toggleModal}>Submit Review</Button>
-        </ReviewModal>
+        <Modal>
+          <ReviewEntry exitModal={toggleModal} />
+          
+          {/* <h1>AM I MODALING???</h1>
+          <Button onClick={toggleModal}>Submit Review</Button> */}
+        </Modal>
       ) : null}
       {/* </Portal> */}
       {/* </ThemeProvider> */}

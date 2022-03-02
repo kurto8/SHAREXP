@@ -1,13 +1,14 @@
-import React, { StrictMode } from 'react';
+import * as React from 'react';
+import { StrictMode } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import { Provider } from "react-redux";
 // import store from "./store";
-import Login from '../components/Login.jsx';
-import Dashboard from '../components/Dashboard.jsx';
-import SignUp from '../components/SignUp.jsx';
-import CompanyDisplay from '../components/CompanyDisplay.jsx';
+import SignIn from './SignIn.jsx';
+import Dashboard from './Dashboard.jsx';
+import SignUp from './SignUp.jsx';
+import CompanyDisplay from './CompanyDisplay.jsx';
 import '../static/styles.css';
 
 const App = () => {
@@ -23,7 +24,7 @@ const App = () => {
             <Route
               path='/dashboard/:companyName/:companyId'
               element={<CompanyDisplay />}></Route>
-            <Route path='/' element={<Login />}></Route>
+            <Route path='/' element={<SignIn />}></Route>
           </Routes>
         </BrowserRouter>
       </div>

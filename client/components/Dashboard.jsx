@@ -16,21 +16,26 @@ import Container from '@mui/material/Container';
 import { Link } from 'react-router-dom';
 // import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+
 export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [cards, setCards] = useState([]);
+  let cache = []
   // const theme = createTheme();
 
   function renderCards() {
+    if (!cache[0]) {
     fetch('/api/companies')
       .then((response) => response.json())
       .then((dataObj) => {
         let compArr = dataObj.companies;
         setCards(compArr);
         setLoading(false);
-        console.log(compArr);
+        cache = compArr;
+        console.log(cache);
       })
       .catch((err) => console.log(err));
+    } else setCards(cache);
   }
 
   useEffect(() => {
@@ -93,7 +98,7 @@ export default function Dashboard() {
             <Stack
               sx={{ pt: 4 }}
               direction='row'
-              spacing={2}
+              // spacing={2}
               justifyContent='center'>
               {/* <Button variant='outlined'>Main call to action</Button> */}
               <Button variant='contained' onClick={promptBox}>
@@ -102,20 +107,17 @@ export default function Dashboard() {
             </Stack>
           </Container>
         </Box>
+        {/* End hero unit */}
         <Container sx={{ py: 8 }} maxWidth='md'>
-          {/* End hero unit */}
-          <Grid className='companies' container spacing={4}>
-            {loading ? (
-              <Grid
-                sx={{
-                  width: '100%',
-                  display: 'flex',
-                  justifyContent: 'center',
-                }}>
-                <h1>Loading...</h1>
-              </Grid>
-            ) : (
-              cards.map((card) => (
+          {loading ? (
+            <Box>
+              <Typography component='h1' variant='h4' align='center'>
+                Loading...
+              </Typography>
+            </Box>
+          ) : (
+            <Grid className='companies' container spacing={4}>
+              {cards.map((card) => (
                 <Grid item key={card.id} xs={12} sm={6} md={4}>
                   <Card
                     id={card.id}
@@ -124,16 +126,23 @@ export default function Dashboard() {
                       display: 'flex',
                       flexDirection: 'column',
                     }}>
-                    <CardMedia
-                      component='img'
+                    <Box
                       sx={{
-                        justifyContent: 'space-around',
-                        16: 9,
-                        // pt: '56.25%',
-                      }}
-                      image={card.logo}
-                      // alt='random'
-                    />
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                      }}>
+                      <CardMedia
+                        component='img'
+                        sx={{
+                          justifyContent: 'space-around',
+                          16: 9,
+                        }}
+                        image={card.logo}
+                        // alt='random'
+                      />
+                    </Box>
                     <CardContent sx={{ flexGrow: 1 }}>
                       <Typography gutterBottom variant='h5' component='h2'>
                         {/* Heading */}
@@ -149,9 +158,9 @@ export default function Dashboard() {
                     </CardActions>
                   </Card>
                 </Grid>
-              ))
-            )}
-          </Grid>
+              ))}
+            </Grid>
+          )}
         </Container>
       </main>
       {/* Footer */}

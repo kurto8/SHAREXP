@@ -140,7 +140,7 @@ export default function SignUp() {
             <hr />
           </Box>
           <Box>
-            <Link to={'/'} variant='body2' style={{ textDecoration: 'none' }}>
+            <Link to={'/'} style={{ textDecoration: 'none' }}>
               ....Oops, I already have an account. Back to Sign In
             </Link>
           </Box>

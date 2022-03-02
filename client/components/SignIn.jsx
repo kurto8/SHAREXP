@@ -117,8 +117,8 @@ export default function Login() {
               }}>
               Don't have an account?...
             </Box>
-                <hr width='67%' />
-            <Link to={'/signup'} style={{ textDecoration: 'none', mt: 0 }}>
+                <hr style={{width: '67%'}} />
+            <Link to={'/signup'} style={{ textDecoration: 'none', marginTop: 0 }}>
               <Button
                 type='submit'
                 fullWidth

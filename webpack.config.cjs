@@ -55,12 +55,24 @@ const config = {
           "sass-loader",
         ],
       },
+      // {
+      //   test: /\.ts(x)?$/,
+      //   use: {
+      //     loader: 'ts-loader',
+      //     options: {
+      //       transpileOnly: true,
+      //     }
+      //   },
+      //   exclude: /node_modules/
+      // }
     ],
   },
   resolve: {
     extensions: [
       '.jsx',
-      '.js'
+      '.js',
+      // '.tsx',
+      // '.ts'
     ],
   }
 };
