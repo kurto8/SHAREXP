@@ -16,7 +16,7 @@ const config = {
     port: 3000,
     proxy: { "/api": "http://localhost:8080" },
   },
-  entry: path.resolve(__dirname, "./client/components/App.jsx"),
+  entry: path.resolve(__dirname, "./client/components/App.tsx"),
   output: {
     path: path.resolve(__dirname, "./dist"),
     filename: "bundle.js",
@@ -55,24 +55,24 @@ const config = {
           "sass-loader",
         ],
       },
-      // {
-      //   test: /\.ts(x)?$/,
-      //   use: {
-      //     loader: 'ts-loader',
-      //     options: {
-      //       transpileOnly: true,
-      //     }
-      //   },
-      //   exclude: /node_modules/
-      // }
+      {
+        test: /\.ts(x)?$/,
+        use: {
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true,
+          }
+        },
+        exclude: /node_modules/
+      }
     ],
   },
   resolve: {
     extensions: [
       '.jsx',
       '.js',
-      // '.tsx',
-      // '.ts'
+      '.tsx',
+      '.ts'
     ],
   }
 };

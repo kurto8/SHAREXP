@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
@@ -13,21 +14,26 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { Link } from 'react-router-dom';
 // import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
 export default function Dashboard() {
+  interface CompanyCardInfo {
+    id: number,
+    logo: string,
+    name: string,
+  }
   const [loading, setLoading] = useState(true);
-  const [cards, setCards] = useState([]);
-  let cache = []
+  const [cards, setCards] = useState<Array<CompanyCardInfo>>([]);
+  let cache: CompanyCardInfo[] = []
   // const theme = createTheme();
 
   function renderCards() {
     if (!cache[0]) {
     fetch('/api/companies')
       .then((response) => response.json())
-      .then((dataObj) => {
+      .then((dataObj: Record<string, CompanyCardInfo[]>) => {
+        console.log(dataObj)
         let compArr = dataObj.companies;
         setCards(compArr);
         setLoading(false);
@@ -43,11 +49,8 @@ export default function Dashboard() {
   }, []);
 
   function promptBox() {
-    let text;
     let company = prompt('Please enter new company name:', '');
     if (company !== null && company !== undefined && company !== '') {
-      // if (company) {
-      text = 'Please enter a valid Company name.';
       fetch('/api/companies', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -57,18 +60,15 @@ export default function Dashboard() {
       })
         .then((response) => response.json())
         .then((dataObj) => {
-          console.log(dataObj);
+          console.log(dataObj.companies[0]);
           renderCards();
         })
         .catch((err) => console.log(err));
     }
-    // else {
-    //   text = company + "has been added to the database";
-    // }
   }
 
   return (
-    <div>
+    <Fragment>
       {/* <ThemeProvider theme={theme}> */}
       <CssBaseline />
       <AppBar position='relative'>
@@ -116,11 +116,11 @@ export default function Dashboard() {
               </Typography>
             </Box>
           ) : (
-            <Grid className='companies' container spacing={4}>
+            <Grid className='companies' container spacing={4} id="cardsContainer">
               {cards.map((card) => (
                 <Grid item key={card.id} xs={12} sm={6} md={4}>
                   <Card
-                    id={card.id}
+                    id={`${card.id}`}
                     sx={{
                       height: '100%',
                       display: 'flex',
@@ -178,6 +178,6 @@ export default function Dashboard() {
       </Box>
       {/* End footer */}
       {/* </ThemeProvider> */}
-    </div>
+    </Fragment>
   );
 }

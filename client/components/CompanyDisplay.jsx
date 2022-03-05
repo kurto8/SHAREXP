@@ -203,9 +203,6 @@ function CompanyDisplay() {
         // <Portal container={modalRoot}>
         <Modal>
           <ReviewEntry exitModal={toggleModal} />
-          
-          {/* <h1>AM I MODALING???</h1>
-          <Button onClick={toggleModal}>Submit Review</Button> */}
         </Modal>
       ) : null}
       {/* </Portal> */}

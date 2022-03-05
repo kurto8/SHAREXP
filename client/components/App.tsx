@@ -1,14 +1,14 @@
-import * as React from 'react';
+import React from 'react';
 import { StrictMode } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import { Provider } from "react-redux";
 // import store from "./store";
-import SignIn from './SignIn.jsx';
-import Dashboard from './Dashboard.jsx';
-import SignUp from './SignUp.jsx';
-import CompanyDisplay from './CompanyDisplay.jsx';
+import SignIn from './SignIn';
+import Dashboard from './Dashboard';
+import SignUp from './SignUp';
+import CompanyDisplay from './CompanyDisplay';
 import '../static/styles.css';
 
 const App = () => {

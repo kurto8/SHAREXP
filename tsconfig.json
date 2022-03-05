@@ -1,0 +1,24 @@
+{
+  "extends": "@tsconfig/node16/tsconfig.json",
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Node 16",
+
+  "compilerOptions": {
+    "lib": ["es2021", "dom"],
+    "module": "commonjs",
+    "target": "es2021",
+    "jsx": "react", 
+    "allowJs": true,
+    // "noEmit": true,
+
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true, 
+
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["client/components/App.tsx"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
+}
