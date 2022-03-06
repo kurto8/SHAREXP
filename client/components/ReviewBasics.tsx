@@ -5,33 +5,33 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
-export default function ReviewForm1({description}) {
+export default function ReviewForm1({ description }: { description: string }) {
   return (
     <React.Fragment>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant='h6' gutterBottom>
         {description}
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="firstName"
-            name="firstName"
-            label="Your Name"
+            id='firstName'
+            name='firstName'
+            label='Your Name'
             fullWidth
-            autoComplete="given-name"
-            variant="standard"
+            autoComplete='given-name'
+            variant='standard'
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="JobLocation"
-            name="JobLocation"
-            label="Job Location"
+            id='JobLocation'
+            name='JobLocation'
+            label='Job Location'
             fullWidth
-            autoComplete="family-name"
-            variant="standard"
+            autoComplete='family-name'
+            variant='standard'
           />
         </Grid>
         {/* <Grid item xs={12}>
@@ -58,21 +58,21 @@ export default function ReviewForm1({description}) {
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="Position"
-            name="Position"
-            label="Position"
+            id='Position'
+            name='Position'
+            label='Position'
             fullWidth
-            autoComplete="shipping address-level2"
-            variant="standard"
+            autoComplete='shipping address-level2'
+            variant='standard'
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="SalaryRange"
-            name="SalaryRange"
-            label="Salary Range"
+            id='SalaryRange'
+            name='SalaryRange'
+            label='Salary Range'
             fullWidth
-            variant="standard"
+            variant='standard'
           />
         </Grid>
         {/* <Grid item xs={12} sm={6}>

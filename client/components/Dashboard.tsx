@@ -23,6 +23,7 @@ export default function Dashboard() {
     logo: string,
     name: string,
   }
+
   const [loading, setLoading] = useState(true);
   const [cards, setCards] = useState<Array<CompanyCardInfo>>([]);
   let cache: CompanyCardInfo[] = []

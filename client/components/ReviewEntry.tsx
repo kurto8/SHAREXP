@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React, { useState, Fragment } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
+// import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
+// import Toolbar from '@mui/material/Toolbar';
 import Paper from '@mui/material/Paper';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -11,17 +11,21 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+// import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Basics from './ReviewBasics';
 // import PaymentForm from './PaymentForm';
 // import Review from './Review';
 
-const steps = ['Basic Information', 'Review Specifics', 'Complete Review'];
+const steps: string[] = [
+  'Basic Information',
+  'Review Specifics',
+  'Complete Review',
+];
 
-function getStepContent(step) {
+function getStepContent(step: number) {
   switch (step) {
     case 0:
-      return <Basics description={steps[0]}/>;
+      return <Basics description={steps[0]} />;
     // case 1:
     //   return <PaymentForm />;
     // case 2:
@@ -31,10 +35,12 @@ function getStepContent(step) {
   }
 }
 
-const theme = createTheme();
+// const theme = createTheme();
 
-export default function ReviewModal({ exitModal }) {
-  const [activeStep, setActiveStep] = React.useState(0);
+// export default function ReviewModal( { exitModal }: {exitModal: () => void }) {
+export default function ReviewModal(props: Record<string, () => void>) {
+  const { exitModal } = props;
+  const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -45,7 +51,8 @@ export default function ReviewModal({ exitModal }) {
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <Fragment>
+      {/* <ThemeProvider theme={theme}> */}
       <CssBaseline />
       {/* <AppBar
         position="absolute"
@@ -115,6 +122,7 @@ export default function ReviewModal({ exitModal }) {
           </React.Fragment> */}
         </Paper>
       </Container>
-    </ThemeProvider>
+      {/* </ThemeProvider> */}
+    </Fragment>
   );
 }

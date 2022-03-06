@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
@@ -29,22 +29,36 @@ import ErrorBoundary from './ErrorBoundary';
 // import { Portal } from '@mui/material';
 
 function CompanyDisplay() {
-  const [cards, setCards] = useState([]);
+  interface ReviewBasics {
+    id: number,
+    title: string,
+    timePosted: string,
+    author: string,
+    levelName: string,
+    positionName: string,
+    salaryRange: string,
+    locationName: string,
+    userId?: number,
+    companyId?: number | undefined,
+  }
+
+  const [cards, setCards] = useState<Array<ReviewBasics>>([]);
   const [modal, showModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const { companyId, companyName } = useParams();
-  const theme = createTheme();
+  
+  // const theme = createTheme();
   // const modalRoot = document.getElementById('modal');
   // console.log(modalRoot);
 
   useEffect(() => {
     fetch(`/api/companies/${companyId}`)
       .then((response) => response.json())
-      .then((dataObj) => {
-        let compArr = dataObj.posts;
-        setCards(dataObj.posts);
+      .then((dataObj: Record<string, ReviewBasics[]>) => {
+        let ReviewsArr = dataObj.posts;
+        setCards(ReviewsArr);
         setLoading(false);
-        console.log(compArr);
+        console.log(ReviewsArr);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -54,9 +68,9 @@ function CompanyDisplay() {
     showModal(!modal ? true : false);
   }
 
-  function preventDefault(event) {
-    event.preventDefault();
-  }
+  // function preventDefault(event) {
+  //   event.preventDefault();
+  // }
 
   // class CompanyDisplay extends Component {
   //   constructor() {
@@ -146,7 +160,7 @@ function CompanyDisplay() {
                       paragraph>
                       Review Title: {card.title}
                     </Typography>
-                    <Table size='large'>
+                    <Table size='medium'>
                       <TableHead>
                         <TableRow>
                           <TableCell>Date</TableCell>
@@ -170,13 +184,13 @@ function CompanyDisplay() {
                         </TableRow>
                       </TableBody>
                     </Table>
-                    <Link
+                    {/* <Link
                       color='primary'
                       href='#'
                       onClick={preventDefault}
                       sx={{ mt: 3 }}>
                       See more details
-                    </Link>
+                    </Link> */}
                   </Paper>
                 </Grid>
               ))}

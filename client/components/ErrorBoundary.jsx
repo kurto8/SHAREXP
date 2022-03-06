@@ -5,6 +5,7 @@
 import React, { Component } from "react";
 import { Link, Navigate } from "react-router-dom";
 
+
 class ErrorBoundary extends Component {
   state = { hasError: false };
   static getDerivedStateFromError() {
@@ -14,7 +15,7 @@ class ErrorBoundary extends Component {
   componentDidCatch(error, info) {
     // Should log this to Sentry, Azure Monitor, New Relic, TrackJS
     console.error("ErrorBoundary caught an error:", error, info);
-    // setTimeout(() => this.setState({ redirect: true, redirect: false }), 5000);
+    setTimeout(() => this.setState({ redirect: true, redirect: false }), 1000);
   }
 
   // // Can't use for errors upon initial load. SO, didn't work with our fake error from Details line 51
@@ -26,11 +27,11 @@ class ErrorBoundary extends Component {
 
   render() {
     if (this.setState.redirect) {
-      return <Navigate to="/" />;
+      return <Navigate replace to="/dashboard" />;
     } else if (this.state.hasError) {
       return (
         <h2>
-          This was an error. <Link to="/">Click here</Link> to go back
+          This was an error. <Link to="/dashboard">Click here</Link> to go back
           to the Home Page.
         </h2>
       );
