@@ -1,17 +1,13 @@
 import React, { useState, Fragment } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
-// import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-// import Toolbar from '@mui/material/Toolbar';
 import Paper from '@mui/material/Paper';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-// import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Basics from './ReviewBasics';
 // import PaymentForm from './PaymentForm';
 // import Review from './Review';
@@ -35,8 +31,6 @@ function getStepContent(step: number) {
   }
 }
 
-// const theme = createTheme();
-
 // export default function ReviewModal( { exitModal }: {exitModal: () => void }) {
 export default function ReviewModal(props: Record<string, () => void>) {
   const { exitModal } = props;
@@ -52,23 +46,7 @@ export default function ReviewModal(props: Record<string, () => void>) {
 
   return (
     <Fragment>
-      {/* <ThemeProvider theme={theme}> */}
       <CssBaseline />
-      {/* <AppBar
-        position="absolute"
-        color="default"
-        elevation={0}
-        sx={{
-          position: 'relative',
-          borderBottom: (t) => `1px solid ${t.palette.divider}`,
-        }}
-      >
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            Company name
-          </Typography>
-        </Toolbar>
-      </AppBar> */}
       <Container component='main' maxWidth='sm'>
         <Paper
           variant='outlined'
@@ -83,20 +61,7 @@ export default function ReviewModal(props: Record<string, () => void>) {
               </Step>
             ))}
           </Stepper>
-          {/* <React.Fragment>
-            {activeStep === steps.length ? (
-              <React.Fragment>
-                <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
-                </Typography>
-                <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
-                </Typography>
-              </React.Fragment>
-            ) : ( */}
-          <React.Fragment>
+          <Fragment>
             {getStepContent(activeStep)}
             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
               {activeStep !== 0 && (
@@ -117,12 +82,9 @@ export default function ReviewModal(props: Record<string, () => void>) {
                 {activeStep === steps.length - 1 ? 'Submit Review' : 'Next'}
               </Button>
             </Box>
-          </React.Fragment>
-          {/* )}
-          </React.Fragment> */}
+          </Fragment>
         </Paper>
       </Container>
-      {/* </ThemeProvider> */}
     </Fragment>
   );
 }

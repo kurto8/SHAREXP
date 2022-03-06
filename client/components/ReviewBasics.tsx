@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { Fragment } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -7,7 +7,7 @@ import Checkbox from '@mui/material/Checkbox';
 
 export default function ReviewForm1({ description }: { description: string }) {
   return (
-    <React.Fragment>
+    <Fragment>
       <Typography variant='h6' gutterBottom>
         {description}
       </Typography>
@@ -104,6 +104,6 @@ export default function ReviewForm1({ description }: { description: string }) {
           />
         </Grid> */}
       </Grid>
-    </React.Fragment>
+    </Fragment>
   );
 }

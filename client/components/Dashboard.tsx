@@ -2,7 +2,6 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
-import CameraIcon from '@mui/icons-material/PhotoCamera';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -14,7 +13,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-// import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
 export default function Dashboard() {
@@ -27,14 +25,13 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [cards, setCards] = useState<Array<CompanyCardInfo>>([]);
   let cache: CompanyCardInfo[] = []
-  // const theme = createTheme();
 
   function renderCards() {
     if (!cache[0]) {
     fetch('/api/companies')
       .then((response) => response.json())
       .then((dataObj: Record<string, CompanyCardInfo[]>) => {
-        console.log(dataObj)
+        // console.log(dataObj)
         let compArr = dataObj.companies;
         setCards(compArr);
         setLoading(false);
@@ -70,7 +67,6 @@ export default function Dashboard() {
 
   return (
     <Fragment>
-      {/* <ThemeProvider theme={theme}> */}
       <CssBaseline />
       <AppBar position='relative'>
         <Toolbar>
@@ -178,7 +174,6 @@ export default function Dashboard() {
         </Typography>
       </Box>
       {/* End footer */}
-      {/* </ThemeProvider> */}
     </Fragment>
   );
 }

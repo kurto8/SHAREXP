@@ -1,55 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
-import CameraIcon from '@mui/icons-material/PhotoCamera';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { FamilyRestroomOutlined } from '@mui/icons-material';
+import { useParams, Link } from 'react-router-dom';
+import { AppBar, Button, CssBaseline, Grid, Stack, Box, Toolbar, Typography, Container, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import Modal from './Modal';
 import ReviewEntry from './ReviewEntry';
 import ErrorBoundary from './ErrorBoundary';
-// import { Portal } from '@mui/material';
 
 function CompanyDisplay() {
   interface ReviewBasics {
-    id: number,
-    title: string,
-    timePosted: string,
-    author: string,
-    levelName: string,
-    positionName: string,
-    salaryRange: string,
-    locationName: string,
-    userId?: number,
-    companyId?: number | undefined,
+    id: number;
+    title: string;
+    timePosted: string;
+    author: string;
+    levelName: string;
+    positionName: string;
+    salaryRange: string;
+    locationName: string;
+    userId?: number;
+    companyId?: number | undefined;
   }
 
   const [cards, setCards] = useState<Array<ReviewBasics>>([]);
   const [modal, showModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const { companyId, companyName } = useParams();
-  
-  // const theme = createTheme();
-  // const modalRoot = document.getElementById('modal');
-  // console.log(modalRoot);
 
   useEffect(() => {
     fetch(`/api/companies/${companyId}`)
@@ -68,40 +41,8 @@ function CompanyDisplay() {
     showModal(!modal ? true : false);
   }
 
-  // function preventDefault(event) {
-  //   event.preventDefault();
-  // }
-
-  // class CompanyDisplay extends Component {
-  //   constructor() {
-  //     super();
-  //     this.state = {
-  //       loading: true,
-  //       cards: [],
-  //       showModal: false,
-  //     };
-  //   }
-
-  //   async componentDidMount() {
-  //     const { companyId, companyName } = useParams();
-  //     const res = await fetch(`/api/companies/${companyId}`);
-  //     const dataObj = await res.json();
-  //     this.setState({
-  //       loading: false,
-  //       cards: dataObj.posts,
-  //     });
-  //   }
-
-  //   toggleModal = () =>
-  //     this.setState({ showModal: !this.state.showModal ? true : false });
-
-  //   render() {
-  //     const theme = createTheme();
-  //     const { cards } = this.state;
-
   return (
     <div>
-      {/* <ThemeProvider theme={theme}> */}
       <CssBaseline />
       <AppBar position='relative'>
         <Toolbar>
@@ -132,10 +73,14 @@ function CompanyDisplay() {
               direction='row'
               spacing={2}
               justifyContent='center'>
+              <Link to={'/dashboard'} style={{ textDecoration: 'none' }}>
+                <Button variant='outlined'>
+                  Back To Dashboard
+                </Button>
+              </Link>
               <Button variant='contained' onClick={toggleModal}>
                 Add New Review
               </Button>
-              {/* <Button variant='outlined'>Secondary action</Button> */}
             </Stack>
           </Container>
         </Box>
@@ -214,13 +159,10 @@ function CompanyDisplay() {
       </Box>
       {/* End footer */}
       {modal ? (
-        // <Portal container={modalRoot}>
         <Modal>
           <ReviewEntry exitModal={toggleModal} />
         </Modal>
       ) : null}
-      {/* </Portal> */}
-      {/* </ThemeProvider> */}
     </div>
   );
 }
@@ -235,3 +177,35 @@ export default function CompanyDisplayWithErrorBoundary() {
     </ErrorBoundary>
   );
 }
+
+// /** Example of creating the component with classes **/
+// function preventDefault(event) {
+//   event.preventDefault();
+// }
+
+// class CompanyDisplay extends Component {
+//   constructor() {
+//     super();
+//     this.state = {
+//       loading: true,
+//       cards: [],
+//       showModal: false,
+//     };
+//   }
+
+//   async componentDidMount() {
+//     const { companyId, companyName } = useParams();
+//     const res = await fetch(`/api/companies/${companyId}`);
+//     const dataObj = await res.json();
+//     this.setState({
+//       loading: false,
+//       cards: dataObj.posts,
+//     });
+//   }
+
+//   toggleModal = () =>
+//     this.setState({ showModal: !this.state.showModal ? true : false });
+
+//   render() {
+//     const theme = createTheme();
+//     const { cards } = this.state;
