@@ -1,6 +1,7 @@
 import React, { FormEvent, Fragment, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { login } from './AuthAndContext';
+import { authenticate } from './Auth&Log';
+import { UserContext } from './Auth&Log';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -14,6 +15,7 @@ import Container from '@mui/material/Container';
 
 export default function Login() {
   // const [loggedIn, setLoggedIn] = useContext(false);
+  const { user, logIn } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -21,12 +23,13 @@ export default function Login() {
     const formData = new FormData(event.currentTarget);
     // console.log('username:', data.get('email'), 'password:', data.get('password'))
     try {
-      const resData = await login(
+      const resData = await authenticate(
         formData.get('email'),
         formData.get('password')
       );
       console.log(resData.cookie)
       if (typeof resData.userId === 'number') {
+        logIn(`${resData.userId}`);
         handleRoute('/dashboard');
         // setContext(data.userId)
       } else prompt(resData.userId + '\n' + 'Please try again');

@@ -8,10 +8,10 @@ router.post(
   usersController.checkIfUsernameExists,
   usersController.login,
   (req, res) => {
-    console.log('logging from end of middleware chain in router: ', res.locals);
+    console.log('logging from end of login middleware chain in router: ', res.locals);
     res
       .cookie('loggedIn', 'true', {
-        maxAge: 1000 * 3, //3hrs
+        maxAge: 1000 * 3, //3 sec
         httpOnly: true,
         secure: true,
       })
@@ -26,7 +26,7 @@ router.post(
   globalController.getCohortId,
   usersController.signup,
   (req, res) => {
-    console.log('logging from end of middleware chain in router: ', res.locals);
+    console.log('logging from end of signup middleware chain in router: ', res.locals);
     res.status(200).json({
       userId: res.locals.userId,
       // avatar: res.locals.avatar,

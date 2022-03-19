@@ -1,5 +1,6 @@
-import React, { Fragment, FormEvent, useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { Fragment, useContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from './Auth&Log';
 import {
   AppBar,
   Button,
@@ -20,11 +21,6 @@ import {
   TextField,
   InputLabel,
 } from '@mui/material';
-import { loadOptions } from '@babel/core';
-import {
-  OnlinePredictionSharp,
-  SettingsInputAntenna,
-} from '@mui/icons-material';
 // import CompanyDisplayWithErrorBoundary from './CompanyDisplay';
 
 interface CompanyCardInfo {
@@ -36,6 +32,7 @@ interface CompanyCardInfo {
 let cache: CompanyCardInfo[] = [];
 
 export default function Dashboard() {
+  const { user, logOut} = useContext(UserContext);
   const [cards, setCards] = useState<Array<CompanyCardInfo>>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState(false);
@@ -83,8 +80,13 @@ export default function Dashboard() {
     }
   }
 
-  function handleCompanySelect(link: string) {
+  function handleRoute(link: string) {
     navigate(link);
+  }
+
+  function goodBye () {
+    logOut();
+    handleRoute('/')
   }
 
   // function handleSelect() {
@@ -92,15 +94,16 @@ export default function Dashboard() {
   //   setInputCompany( `${cards[0].name}/${cards[0].id}`);
   //   handleCompanySelect(`${cards[0].name}/${cards[0].id}`)
   // }
-
+  
   return (
     <Fragment>
       <CssBaseline />
       <AppBar position='relative'>
         <Toolbar>
-          <Typography variant='h6' color='inherit' onClick={() => handleCompanySelect('/dashboard')} noWrap>
+          <Typography variant='h6' color='inherit' onClick={() => handleRoute('/dashboard')} noWrap>
             SHAREXP
           </Typography>
+          <Button onClick={goodBye}>Logout</Button>
         </Toolbar>
       </AppBar>
       <main>
@@ -167,8 +170,8 @@ export default function Dashboard() {
                     /> */}
                     <Select
                       value=''
-                      onChange={(e) => handleCompanySelect(e.target.value)}
-                      onBlur={(e) => handleCompanySelect(e.target.value)}>
+                      onChange={(e) => handleRoute(e.target.value)}
+                      onBlur={(e) => handleRoute(e.target.value)}>
                       {cards.map((company) => (
                         <MenuItem
                           key={company.id}
@@ -258,7 +261,7 @@ export default function Dashboard() {
                       <Button
                         size='small'
                         onClick={() =>
-                          handleCompanySelect(`/dashboard/${card.name}/${card.id}`)
+                          handleRoute(`/dashboard/${card.name}/${card.id}`)
                         }>
                         SEE REVIEWS
                       </Button>
