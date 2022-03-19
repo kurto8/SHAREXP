@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-
+import cookieParser from 'cookie-parser'
 // import dotenv from 'dotenv';
 // dotenv.config();
 
@@ -17,6 +17,7 @@ const PORT = 8080;
 app.use(express.static(path.resolve(__dirname, '../client/static/')))
 
 // middleware to show us request bodies
+app.use(cookieParser())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

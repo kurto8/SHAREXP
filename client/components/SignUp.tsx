@@ -4,30 +4,12 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-// import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-// import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-// function Copyright(props) {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
-
-// const theme = createTheme();
 
 export default function SignUp() {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -42,7 +24,7 @@ export default function SignUp() {
 
   return (
     <Fragment>
-    {/* <ThemeProvider theme={theme}> */}
+      {/* <ThemeProvider theme={theme}> */}
       <Container component='main' maxWidth='xs'>
         <CssBaseline />
         <Box
@@ -117,7 +99,7 @@ export default function SignUp() {
                   autoComplete='confirm-new-password'
                 />
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
@@ -127,11 +109,12 @@ export default function SignUp() {
                   id='cohorttoken'
                   autoComplete='cohorttoken'
                 />
-              </Grid>
+              </Grid> */}
+              <Grid item xs={12}></Grid>
             </Grid>
             <Link to={'/'} style={{ textDecoration: 'none' }}>
               <Button
-                type='submit'
+                // type='submit'
                 fullWidth
                 variant='contained'
                 sx={{ mt: 3, mb: 2 }}>
@@ -139,16 +122,15 @@ export default function SignUp() {
               </Button>
             </Link>
             <hr />
-          </Box>
-          <Box>
-            <Link to={'/'} style={{ textDecoration: 'none' }}>
-              ....Oops, I already have an account. Back to Sign In
-            </Link>
+            <Box>
+              <Link to={'/'} style={{ textDecoration: 'none' }}>
+                ....Oops, I already have an account. Back to Sign In
+              </Link>
+            </Box>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 5 }} /> */}
       </Container>
-    {/* </ThemeProvider> */}
+      {/* </ThemeProvider> */}
     </Fragment>
   );
 }

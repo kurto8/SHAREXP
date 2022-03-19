@@ -21,9 +21,3 @@ function Modal({ children }) {
 }
 
 export default Modal;
-
-// document.addEventListener('DOMContentLoaded', () => {
-//   document
-//     .getElementById('save')
-//     .addEventListener('click', () => newMessageToDB());
-// });

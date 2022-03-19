@@ -1,33 +1,55 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import { Link } from 'react-router-dom';
-import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import React, { Fragment, FormEvent, useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import {
+  AppBar,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  CssBaseline,
+  Grid,
+  Stack,
+  Box,
+  Toolbar,
+  Typography,
+  Container,
+  Select,
+  MenuItem,
+  Autocomplete,
+  TextField,
+  InputLabel,
+} from '@mui/material';
+import { loadOptions } from '@babel/core';
+import {
+  OnlinePredictionSharp,
+  SettingsInputAntenna,
+} from '@mui/icons-material';
+// import CompanyDisplayWithErrorBoundary from './CompanyDisplay';
 
+interface CompanyCardInfo {
+  id: number;
+  logo: string;
+  name: string;
+}
+
+let cache: CompanyCardInfo[] = [];
 
 export default function Dashboard() {
-  interface CompanyCardInfo {
-    id: number,
-    logo: string,
-    name: string,
-  }
-
-  const [loading, setLoading] = useState(true);
   const [cards, setCards] = useState<Array<CompanyCardInfo>>([]);
-  let cache: CompanyCardInfo[] = []
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState(false);
+  const [add, setAdd] = useState(false);
+  const [company, setCompany] = useState({});
+  const [inputCompany, setInputCompany] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    renderCards();
+  }, []);
 
   function renderCards() {
-    if (!cache[0]) {
+    // if (!cache[0]) {
     fetch('/api/companies')
       .then((response) => response.json())
       .then((dataObj: Record<string, CompanyCardInfo[]>) => {
@@ -39,13 +61,9 @@ export default function Dashboard() {
         console.log(cache);
       })
       .catch((err) => console.log(err));
-    } else setCards(cache);
+    // } else setCards(cache);
   }
-
-  useEffect(() => {
-    renderCards();
-  }, []);
-
+  
   function promptBox() {
     let company = prompt('Please enter new company name:', '');
     if (company !== null && company !== undefined && company !== '') {
@@ -65,12 +83,22 @@ export default function Dashboard() {
     }
   }
 
+  function handleCompanySelect(link: string) {
+    navigate(link);
+  }
+
+  // function handleSelect() {
+  //   setCompany(cards[0]);
+  //   setInputCompany( `${cards[0].name}/${cards[0].id}`);
+  //   handleCompanySelect(`${cards[0].name}/${cards[0].id}`)
+  // }
+
   return (
     <Fragment>
       <CssBaseline />
       <AppBar position='relative'>
         <Toolbar>
-          <Typography variant='h6' color='inherit' noWrap>
+          <Typography variant='h6' color='inherit' onClick={() => handleCompanySelect('/dashboard')} noWrap>
             SHAREXP
           </Typography>
         </Toolbar>
@@ -95,12 +123,88 @@ export default function Dashboard() {
             <Stack
               sx={{ pt: 4 }}
               direction='row'
-              // spacing={2}
+              // maxWidth='280px'
+              spacing={1}
               justifyContent='center'>
-              {/* <Button variant='outlined'>Main call to action</Button> */}
-              <Button variant='contained' onClick={promptBox}>
-                Add Company To Dashboard
-              </Button>
+              <Box
+                sx={{
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                }}>
+                <Button
+                  variant='contained'
+                  onClick={() => setSearch(search ? false : true)}>
+                  Search Existing Companies
+                </Button>
+                <br />
+                {search ? (
+                  <Stack spacing={2}>
+                    {/* <Autocomplete
+                      // id="links"
+                      value={company}
+                      inputValue={inputCompany}
+                      onChange={(event, newValue) => {
+                        setCompany(newValue);
+                      }}
+                      onInputChange={(event, newInput) => {
+                        setInputCompany(newInput);
+                      }}
+                      options={cards}
+                      getOptionLabel={(option) => option.name}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          // {...input}
+                          label='Search here....'
+                        />
+                      )}
+                      onClick={handleSelect}
+                      onKeyUp={(e) => {
+                        if (e.key === "Enter") handleSelect
+                      }}
+                    /> */}
+                    <Select
+                      value=''
+                      onChange={(e) => handleCompanySelect(e.target.value)}
+                      onBlur={(e) => handleCompanySelect(e.target.value)}>
+                      {cards.map((company) => (
+                        <MenuItem
+                          key={company.id}
+                          value={`/dashboard/${company.name}/${company.id}`}>
+                          {company.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </Stack>
+                ) : null}
+              </Box>
+              <Box
+                sx={{
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                }}>
+                <Button variant='outlined' onClick={promptBox}>
+                  Add Company To Dashboard
+                </Button>
+                {/* <br />
+                {add ? (
+                  <TextField
+                    value={company}
+                    label='Enter new company name:'
+                    onChange={(e) => {
+                      // if (/^[a-z0-9\s]+$/i.test(e.target.value)) setCompany(e.target.value)
+                      if (e.target.value[-1] !== "Enter") setCompany(e.target.value)
+                    }}
+                    onKeyUp={(e) => {
+                      if (e.key === 'Enter') promptBox(company)
+                    }}
+                    ></TextField>
+                 ) : null}  */}
+              </Box>
             </Stack>
           </Container>
         </Box>
@@ -113,7 +217,11 @@ export default function Dashboard() {
               </Typography>
             </Box>
           ) : (
-            <Grid className='companies' container spacing={4} id="cardsContainer">
+            <Grid
+              className='companies'
+              container
+              spacing={4}
+              id='cardsContainer'>
               {cards.map((card) => (
                 <Grid item key={card.id} xs={12} sm={6} md={4}>
                   <Card
@@ -134,7 +242,7 @@ export default function Dashboard() {
                         component='img'
                         sx={{
                           justifyContent: 'space-around',
-                          16: 9,
+                          // 16: 9,
                         }}
                         image={card.logo}
                         // alt='random'
@@ -147,11 +255,13 @@ export default function Dashboard() {
                       </Typography>
                     </CardContent>
                     <CardActions>
-                      <Link
-                        to={`/dashboard/${card.name}/${card.id}`}
-                        style={{ textDecoration: 'none' }}>
-                        <Button size='small'>SEE REVIEWS</Button>
-                      </Link>
+                      <Button
+                        size='small'
+                        onClick={() =>
+                          handleCompanySelect(`/dashboard/${card.name}/${card.id}`)
+                        }>
+                        SEE REVIEWS
+                      </Button>
                     </CardActions>
                   </Card>
                 </Grid>

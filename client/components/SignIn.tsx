@@ -1,46 +1,43 @@
-import React, { FormEvent, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import React, { FormEvent, Fragment, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { login } from './AuthAndContext';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
 export default function Login() {
-  // const [username, setUsername] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [userLoggedIn, setUserLoggedIn] = useState(false);
-  // const [passwordState, setPasswordState] = useState('password');
+  // const [loggedIn, setLoggedIn] = useContext(false);
+  const navigate = useNavigate();
 
-  // const handleLogin = (username, password) => {
-  //   fetch('/api/login', {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify({
-  //       username,
-  //       passwordUser: password,
-  //     })
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => handleUserFetch(data))
-  //     .catch((err) => console.log(err));
-  // };
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const formData = new FormData(event.currentTarget);
+    // console.log('username:', data.get('email'), 'password:', data.get('password'))
+    try {
+      const resData = await login(
+        formData.get('email'),
+        formData.get('password')
+      );
+      console.log(resData.cookie)
+      if (typeof resData.userId === 'number') {
+        handleRoute('/dashboard');
+        // setContext(data.userId)
+      } else prompt(resData.userId + '\n' + 'Please try again');
+    } catch (err) {
+      console.log('error:', err);
+    }
   };
+
+  function handleRoute(link: string) {
+    navigate(link);
+  }
 
   return (
     <Fragment>
@@ -72,9 +69,7 @@ export default function Login() {
               label='Email Address'
               name='email'
               autoComplete='email'
-              // value={username}
-              // onChange={(e) => setUsername(e.target.value)}
-              // autoFocus
+              autoFocus
             />
             <TextField
               margin='normal'
@@ -85,25 +80,19 @@ export default function Login() {
               id='password'
               autoComplete='current-password'
               type='password'
-              // type={passwordState}
-              // value={password}
-              // onChange={(e) => setPassword(e.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value='remember' color='primary' />}
               label='Remember me'
             />
-            <Link to={'/dashboard'} style={{ textDecoration: 'none' }}>
-              <Button
-                type='submit'
-                fullWidth
-                variant='contained'
-                sx={{ mt: 3, mb: 4 }}
-                // onClick={() => handleLogin(username, password)}
-              >
-                Sign In
-              </Button>
-            </Link>
+            <Button
+              type='submit'
+              fullWidth
+              variant='contained'
+              sx={{ mt: 3, mb: 4 }}>
+              Sign In
+            </Button>
+
             <br />
             <Box
               sx={{
@@ -113,10 +102,12 @@ export default function Login() {
               }}>
               Don't have an account?...
             </Box>
-                <hr style={{width: '67%'}} />
-            <Link to={'/signup'} style={{ textDecoration: 'none', marginTop: 0 }}>
+            <hr style={{ width: '67%' }} />
+            <Link
+              to={'/signup'}
+              style={{ textDecoration: 'none', marginTop: 0 }}>
               <Button
-                type='submit'
+                // type='submit'
                 fullWidth
                 variant='contained'
                 sx={{ mt: 1, mb: 2 }}>
@@ -125,8 +116,7 @@ export default function Login() {
             </Link>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
-    </ Fragment>
+    </Fragment>
   );
 }

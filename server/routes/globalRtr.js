@@ -6,6 +6,7 @@ router.get("/all",
   globalController.getAllEntries,
   (req, res) => {
     console.log('logging from end of middleware chain in router: ', res.locals)
+    if (!req.cookies.loggedIn) return res.status(401).send();
     res.status(200).json({
       posts: res.locals.posts
     });
