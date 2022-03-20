@@ -25,7 +25,7 @@ router.post(
       res.locals
     );
     res.status(200).json({
-      id: res.locals.companyId,
+      id: res.locals.id,
       name: res.locals.name,
       logo: res.locals.logo,
     });

@@ -21,16 +21,15 @@ export default function Login() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    // console.log('username:', data.get('email'), 'password:', data.get('password'))
+    // console.log('username:', data.get('name), 'password:', data.get('password'))
     try {
       const resData = await authenticate(
-        formData.get('email'),
+        formData.get('name'),
         formData.get('password')
       );
-      console.log(resData.cookie)
       if (typeof resData.userId === 'number') {
-        logIn(`${resData.userId}`);
         handleRoute('/dashboard');
+        logIn(`${resData.userId}`);
         // setContext(data.userId)
       } else prompt(resData.userId + '\n' + 'Please try again');
     } catch (err) {
@@ -68,10 +67,10 @@ export default function Login() {
               margin='normal'
               required
               fullWidth
-              id='email'
-              label='Email Address'
-              name='email'
-              autoComplete='email'
+              id='name'
+              label='Name'
+              name='name'
+              autoComplete='name'
               autoFocus
             />
             <TextField

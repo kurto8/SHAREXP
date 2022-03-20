@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 
 const modalRoot = document.createElement('div');
 
-function Modal({ children }) {
+function Modal( children ) {
   // using Ref here guarantees a unique portal for this Modal
   const elRef = useRef();
   if (!elRef.current) {

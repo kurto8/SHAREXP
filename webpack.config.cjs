@@ -3,6 +3,7 @@ const path = require('path');
 const process = require("process");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpack = require('webpack')
 
 const config = {
   mode: process.env.NODE_ENV || 'production',
@@ -24,6 +25,10 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({ template: "index.html" }),
     new MiniCssExtractPlugin(),
+    // new webpack.optimize.CommonsChunkPlugin('common.js'),
+    // new webpack.optimize.DedupePlugin(),
+    // new webpack.optimize.UglifyJsPlugin(),
+    // new webpack.optimize.AggressiveMergingPlugin(),
   ],
   module: {
     rules: [

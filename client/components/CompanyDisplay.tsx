@@ -1,6 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { AppBar, Button, CssBaseline, Grid, Stack, Box, Toolbar, Typography, Container, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import {
+  AppBar,
+  Button,
+  CssBaseline,
+  Grid,
+  Stack,
+  Box,
+  Toolbar,
+  Typography,
+  Container,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from '@mui/material';
 import Modal from './Modal';
 import ReviewEntry from './ReviewEntry';
 import ErrorBoundary from './ErrorBoundary';
@@ -37,9 +53,9 @@ function CompanyDisplay() {
   }, []);
 
   function toggleModal() {
-    console.log('showModal:', modal);
     showModal(!modal ? true : false);
   }
+  console.log('showModal:', modal);
 
   return (
     <div>
@@ -74,9 +90,7 @@ function CompanyDisplay() {
               spacing={2}
               justifyContent='center'>
               <Link to={'/dashboard'} style={{ textDecoration: 'none' }}>
-                <Button variant='outlined'>
-                  Back To Dashboard
-                </Button>
+                <Button variant='outlined'>Back To Dashboard</Button>
               </Link>
               <Button variant='contained' onClick={toggleModal}>
                 Add New Review

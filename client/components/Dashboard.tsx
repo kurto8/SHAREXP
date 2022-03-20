@@ -32,7 +32,7 @@ interface CompanyCardInfo {
 let cache: CompanyCardInfo[] = [];
 
 export default function Dashboard() {
-  const { user, logOut} = useContext(UserContext);
+  const { user, logOut } = useContext(UserContext);
   const [cards, setCards] = useState<Array<CompanyCardInfo>>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState(false);
@@ -54,13 +54,13 @@ export default function Dashboard() {
         let compArr = dataObj.companies;
         setCards(compArr);
         setLoading(false);
-        cache = compArr;
-        console.log(cache);
+        // cache = compArr;
+        // console.log(cache);
       })
       .catch((err) => console.log(err));
     // } else setCards(cache);
   }
-  
+
   function promptBox() {
     let company = prompt('Please enter new company name:', '');
     if (company !== null && company !== undefined && company !== '') {
@@ -73,7 +73,7 @@ export default function Dashboard() {
       })
         .then((response) => response.json())
         .then((dataObj) => {
-          console.log(dataObj.companies[0]);
+          console.log(dataObj);
           renderCards();
         })
         .catch((err) => console.log(err));
@@ -84,9 +84,9 @@ export default function Dashboard() {
     navigate(link);
   }
 
-  function goodBye () {
+  function goodBye() {
+    handleRoute('/');
     logOut();
-    handleRoute('/')
   }
 
   // function handleSelect() {
@@ -94,13 +94,17 @@ export default function Dashboard() {
   //   setInputCompany( `${cards[0].name}/${cards[0].id}`);
   //   handleCompanySelect(`${cards[0].name}/${cards[0].id}`)
   // }
-  
+
   return (
     <Fragment>
       <CssBaseline />
       <AppBar position='relative'>
         <Toolbar>
-          <Typography variant='h6' color='inherit' onClick={() => handleRoute('/dashboard')} noWrap>
+          <Typography
+            variant='h6'
+            color='inherit'
+            onClick={() => handleRoute('/dashboard')}
+            noWrap>
             SHAREXP
           </Typography>
           <Button onClick={goodBye}>Logout</Button>
@@ -212,7 +216,7 @@ export default function Dashboard() {
           </Container>
         </Box>
         {/* End hero unit */}
-        <Container sx={{ py: 8 }} maxWidth='md'>
+        <Container sx={{ py: 8 }} maxWidth='lg'>
           {loading ? (
             <Box>
               <Typography component='h1' variant='h4' align='center'>
@@ -226,7 +230,7 @@ export default function Dashboard() {
               spacing={4}
               id='cardsContainer'>
               {cards.map((card) => (
-                <Grid item key={card.id} xs={12} sm={6} md={4}>
+                <Grid item key={card.id} xs={6} sm={4} md={3} lg={2}>
                   <Card
                     id={`${card.id}`}
                     sx={{
@@ -251,14 +255,15 @@ export default function Dashboard() {
                         // alt='random'
                       />
                     </Box>
-                    <CardContent sx={{ flexGrow: 1 }}>
-                      <Typography gutterBottom variant='h5' component='h2'>
+                    <CardContent sx={{ flexGrow: 1, py: 0 }}>
+                      <Typography variant='h5' component='h2'>
                         {/* Heading */}
                         {card.name}
                       </Typography>
                     </CardContent>
-                    <CardActions>
+                    <CardActions sx={{ py: 0, pl: '6%' }}>
                       <Button
+                        sx={{ py: 0 }}
                         size='small'
                         onClick={() =>
                           handleRoute(`/dashboard/${card.name}/${card.id}`)
