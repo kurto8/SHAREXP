@@ -16,22 +16,29 @@ import CompanyDisplay from './CompanyDisplay';
 import '../static/styles.css';
 
 const App = () => {
-  const theme = createTheme();
+  const lightTheme = createTheme();
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+    }
+  });
+
 
   return (
-    <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <UserProvider>
-            <Routes>
-              <Route path='/signup' element={<SignUp />}></Route>
-              <Route path='/dashboard' element={<Dashboard />}></Route>
-              <Route
-                path='/dashboard/:companyName/:companyId'
-                element={<CompanyDisplay />}></Route>
-              <Route path='/' element={<SignIn />}></Route>
-            </Routes>
-          </UserProvider>
-        </BrowserRouter>
+    <ThemeProvider theme={darkTheme}>
+      <BrowserRouter>
+        {/* <UserProvider> */}
+        <Routes>
+          <Route path='/signup' element={<SignUp />}></Route>
+          <Route path='/dashboard' element={<Dashboard />}></Route>
+          <Route
+            path='/dashboard/:companyName/:companyId'
+            element={<CompanyDisplay />}></Route>
+          {/* <Route path='/' element={<SignIn />}></Route> */}
+          <Route path='/' element={<Dashboard />}></Route>
+        </Routes>
+        {/* </UserProvider> */}
+      </BrowserRouter>
     </ThemeProvider>
   );
 };
@@ -43,18 +50,20 @@ render(
   document.getElementById('root')
 );
 
-// const [currentUser, setCurrentUser] = useContext(UserContext);
 
-// useEffect(() => {
-//   const checkLoggedIn = () => {
-//     let user = isAuthenticated();
-//     if (user === null) {
-//       sessionStorage.setItem('user', '');
-//       user = '';
-//     }
-//     setCurrentUser(user);
-//   };
-//   checkLoggedIn();
-// }, []);
+// const [isDarkMode, setIsDarkMode] = useState(false);
+  // const light = createTheme({
+  //   palette: {
+  //     mode: 'light',
+  //   },
+  // });
+  // const dark = createTheme({
+  //   palette: {
+  //     mode: 'dark',
+  //   },
+  // });
 
-// console.log('userContext', currentUser);
+  // const theme = isDarkMode ? dark : light;
+  // const toggleDarkMode = () => {
+  //   setIsDarkMode(!isDarkMode);
+  // };

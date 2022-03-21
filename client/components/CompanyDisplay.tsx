@@ -35,22 +35,39 @@ function CompanyDisplay() {
     companyId?: number | undefined;
   }
 
+  const { companyId, companyName } = useParams();
+  const storage = sessionStorage.getItem(`${companyId}` + 'Cache')
+  const cache = useState(storage ? JSON.parse(storage) : []);
+  const [cachedData, setCachedData] = useState(storage ? true : false);
   const [cards, setCards] = useState<Array<ReviewBasics>>([]);
   const [modal, showModal] = useState(false);
   const [loading, setLoading] = useState(true);
-  const { companyId, companyName } = useParams();
 
   useEffect(() => {
-    fetch(`/api/companies/${companyId}`)
-      .then((response) => response.json())
-      .then((dataObj: Record<string, ReviewBasics[]>) => {
-        let ReviewsArr = dataObj.posts;
-        setCards(ReviewsArr);
-        setLoading(false);
-        console.log(ReviewsArr);
-      })
-      .catch((err) => console.log(err));
+    console.log('cache:', cache[0]);
+    if (cachedData) {
+      setCards(cache[0]);
+      setLoading(false);
+    } else renderReviews();
   }, []);
+
+  async function renderReviews() {
+    try {
+      const response = await fetch(`/api/companies/${companyId}`);
+      const dataObj: Record<string, ReviewBasics[]> = await response.json();
+      let reviewsArr = dataObj.posts;
+      sessionStorage.setItem(
+        `${companyId}` + 'Cache',
+        JSON.stringify(reviewsArr)
+      );
+      setCachedData(true);
+      setCards(reviewsArr);
+      setLoading(false);
+      console.log('fetched Arr:', reviewsArr);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   function toggleModal() {
     showModal(!modal ? true : false);

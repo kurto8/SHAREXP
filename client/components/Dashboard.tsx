@@ -29,36 +29,40 @@ interface CompanyCardInfo {
   name: string;
 }
 
-let cache: CompanyCardInfo[] = [];
-
 export default function Dashboard() {
+  const storage = sessionStorage.getItem('DashboardCache');
+  const cache = useState(storage ? JSON.parse(storage) : []);
+  const [cachedData, setCachedData] = useState(storage ? true : false);
   const { user, logOut } = useContext(UserContext);
-  const [cards, setCards] = useState<Array<CompanyCardInfo>>([]);
+  const [cards, setCompanyCards] = useState<Array<CompanyCardInfo>>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState(false);
-  const [add, setAdd] = useState(false);
-  const [company, setCompany] = useState({});
-  const [inputCompany, setInputCompany] = useState('');
+  // const [add, setAdd] = useState(false);
+  // const [company, setCompany] = useState({});
+  // const [inputCompany, setInputCompany] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    renderCards();
+    console.log('cache:', cache[0]);
+    if (cachedData) {
+      setCompanyCards(cache[0]);
+      setLoading(false);
+    } else renderCompanyCards();
   }, []);
 
-  function renderCards() {
-    // if (!cache[0]) {
-    fetch('/api/companies')
-      .then((response) => response.json())
-      .then((dataObj: Record<string, CompanyCardInfo[]>) => {
-        // console.log(dataObj)
-        let compArr = dataObj.companies;
-        setCards(compArr);
-        setLoading(false);
-        // cache = compArr;
-        // console.log(cache);
-      })
-      .catch((err) => console.log(err));
-    // } else setCards(cache);
+  async function renderCompanyCards() {
+    try {
+      const response = await fetch('/api/companies');
+      const dataObj: Record<string, CompanyCardInfo[]> = await response.json();
+      let compArr = dataObj.companies;
+      sessionStorage.setItem('DashboardCache', JSON.stringify(compArr));
+      setCachedData(true);
+      setCompanyCards(compArr);
+      setLoading(false);
+      console.log('fetched Arr:', compArr);
+    } catch (err) {
+      console.log('fetch err0r:', err);
+    }
   }
 
   function promptBox() {
@@ -74,7 +78,7 @@ export default function Dashboard() {
         .then((response) => response.json())
         .then((dataObj) => {
           console.log(dataObj);
-          renderCards();
+          renderCompanyCards();
         })
         .catch((err) => console.log(err));
     }
@@ -255,13 +259,16 @@ export default function Dashboard() {
                         // alt='random'
                       />
                     </Box>
-                    <CardContent sx={{ flexGrow: 1, py: 0 }}>
-                      <Typography variant='h5' component='h2'>
+                    <CardContent sx={{ flexGrow: 1, py: 0, pl: '5%' }}>
+                      <Typography
+                        sx={{ fontSize: '1.3rem' }}
+                        variant='h5'
+                        component='h2'>
                         {/* Heading */}
                         {card.name}
                       </Typography>
                     </CardContent>
-                    <CardActions sx={{ py: 0, pl: '6%' }}>
+                    <CardActions sx={{ py: 0, pl: '2%' }}>
                       <Button
                         sx={{ py: 0 }}
                         size='small'

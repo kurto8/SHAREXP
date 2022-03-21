@@ -5,6 +5,9 @@ export interface AuthProps {
   user: string | undefined,
   logIn: (name: string) => void,
   logOut: () => void,
+  // theme: Theme,
+  // isDarkMode: boolean,
+  // toggleDarkMode: (mode: boolean) => void,
 }
 
 export const UserContext = createContext({} as AuthProps);
@@ -12,6 +15,7 @@ export const UserContext = createContext({} as AuthProps);
 export default function UserProvider(props: {children: React.ReactNode}) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState('');
+  // const [isDarkMode, setIsDarkMode] = useState(false);
 
   const logIn = (name: string) => {
     setUser(name)
@@ -22,6 +26,21 @@ export default function UserProvider(props: {children: React.ReactNode}) {
     setUser('')
     setLoggedIn(false);
   };
+
+   // const toggleDarkMode = (mode: boolean) => {
+  //   const light = createTheme({
+  //     palette: {
+  //       mode: 'light',
+  //     },
+  //   });
+  //   const dark = createTheme({
+  //     palette: {
+  //       mode: 'dark',
+  //     },
+  //   })
+  //   const theme = isDarkMode ? dark : light;
+  //   setIsDarkMode(!isDarkMode)
+  // }
 
   return (
     <UserContext.Provider value={{ user, logIn, logOut }}>
