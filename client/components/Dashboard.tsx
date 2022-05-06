@@ -1,6 +1,8 @@
 import React, { Fragment, useContext, useState, useEffect } from 'react';
+import ReactTooltip from 'react-tooltip';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from './Auth&Log';
+import WorldMap from './WorldMap';
 import {
   AppBar,
   Button,
@@ -21,6 +23,7 @@ import {
   TextField,
   InputLabel,
 } from '@mui/material';
+import { BorderAllRounded } from '@mui/icons-material';
 // import CompanyDisplayWithErrorBoundary from './CompanyDisplay';
 
 interface CompanyCardInfo {
@@ -30,6 +33,8 @@ interface CompanyCardInfo {
 }
 
 export default function Dashboard() {
+  const [content, setContent] = useState('');
+
   const storage = sessionStorage.getItem('DashboardCache');
   const cache = useState(storage ? JSON.parse(storage) : []);
   const [cachedData, setCachedData] = useState(storage ? true : false);
@@ -220,70 +225,29 @@ export default function Dashboard() {
           </Container>
         </Box>
         {/* End hero unit */}
-        <Container sx={{ py: 8 }} maxWidth='lg'>
-          {loading ? (
-            <Box>
-              <Typography component='h1' variant='h4' align='center'>
-                Loading...
-              </Typography>
-            </Box>
-          ) : (
-            <Grid
-              className='companies'
-              container
-              spacing={4}
-              id='cardsContainer'>
-              {cards.map((card) => (
-                <Grid item key={card.id} xs={6} sm={4} md={3} lg={2}>
-                  <Card
-                    id={`${card.id}`}
-                    sx={{
-                      height: '100%',
-                      display: 'flex',
-                      flexDirection: 'column',
-                    }}>
-                    <Box
-                      sx={{
-                        height: '100%',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                      }}>
-                      <CardMedia
-                        component='img'
-                        sx={{
-                          justifyContent: 'space-around',
-                          // 16: 9,
-                        }}
-                        image={card.logo}
-                        // alt='random'
-                      />
-                    </Box>
-                    <CardContent sx={{ flexGrow: 1, py: 0, pl: '5%' }}>
-                      <Typography
-                        sx={{ fontSize: '1.3rem' }}
-                        variant='h5'
-                        component='h2'>
-                        {/* Heading */}
-                        {card.name}
-                      </Typography>
-                    </CardContent>
-                    <CardActions sx={{ py: 0, pl: '2%' }}>
-                      <Button
-                        sx={{ py: 0 }}
-                        size='small'
-                        onClick={() =>
-                          handleRoute(`/dashboard/${card.name}/${card.id}`)
-                        }>
-                        SEE REVIEWS
-                      </Button>
-                    </CardActions>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
-          )}
-        </Container>
+        <Box
+          sx={{
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            px:'100px',
+          }}>
+          <Container
+            maxWidth='lg'
+            sx={{
+              bgcolor: '#1c5375',
+              borderRadius: '66px',
+            }}>
+            <WorldMap setTooltipContent={setContent} />
+            <ReactTooltip
+              className='tool-tip'
+              backgroundColor='white'
+              textColor='black'
+              clickable>
+              {content}
+            </ReactTooltip>
+          </Container>
+        </Box>
       </main>
       {/* Footer */}
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component='footer'>
