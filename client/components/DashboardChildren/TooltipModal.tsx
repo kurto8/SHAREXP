@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import countryCityObj from '../countryCapitals';
-import '../static/styles.css';
+import countryCityObj from '../../countryCapitals';
+import '../../static/styles.css';
 
 interface geoDetails {
   details: Record<string, string>,

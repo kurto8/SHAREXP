@@ -6,8 +6,8 @@ import {
   Geographies,
   Geography,
 } from 'react-simple-maps';
-import countryCityObj from '../countryCapitals';
-import store from '../store';
+import countryCityObj from '../../countryCapitals';
+import store from '../../redux/store';
 import TooltipModal from './TooltipModal';
 
 interface geoObj {

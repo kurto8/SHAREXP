@@ -2,7 +2,7 @@ import React, { Fragment, useContext, useState, useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from './Auth&Log';
-import WorldMap from './WorldMap';
+import WorldMap from './DashboardChildren/WorldMap';
 import {
   AppBar,
   Button,
