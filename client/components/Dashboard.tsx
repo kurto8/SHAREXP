@@ -27,13 +27,13 @@ import { BorderAllRounded } from '@mui/icons-material';
 // import CompanyDisplayWithErrorBoundary from './CompanyDisplay';
 
 interface CompanyCardInfo {
-  id: number;
-  logo: string;
-  name: string;
+  id: number,
+  logo: string,
+  name: string,
 }
 
 export default function Dashboard() {
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState<FunctionConstructor | JSX.Element>();
 
   const storage = sessionStorage.getItem('DashboardCache');
   const cache = useState(storage ? JSON.parse(storage) : []);

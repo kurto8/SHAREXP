@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import countryCityObj from '../countryCapitals.js';
+import countryCityObj from '../countryCapitals';
 import '../static/styles.css';
 
-const TooltipModal = (props) => {
-  // console.log(props)
-  const [city, setCity] = useState('');
+interface geoDetails {
+  details: Record<string, string>,
+}
+
+interface countryCapitalInfo {
+  country: string,
+  city: string | null,
+}
+
+const TooltipModal = (props: geoDetails) => {
+  console.log(props)
+  const [city, setCity] = useState<string | null>('');
 
   useEffect(() => {
-    let val = findCountry(countryCityObj, props.NAME);
+    let val = findCountry(countryCityObj, props.details.NAME_LONG);
     setCity(val);
-  }, [props.NAME]);
+  }, [props.details.NAME_LONG]);
 
-  const findCountry = (arr, val) => {
+  const findCountry = (arr: countryCapitalInfo[], val: string): string | null => {
     const country = arr.filter((element) => element.country === val);
     return country[0]?.city;
   };

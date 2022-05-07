@@ -6,36 +6,40 @@ import {
   Geographies,
   Geography,
 } from 'react-simple-maps';
-import countryCityObj from '../countryCapitals.js';
+import countryCityObj from '../countryCapitals';
 import store from '../store';
-import TooltipModal from './TooltipModal.jsx';
+import TooltipModal from './TooltipModal';
 
+interface geoObj {
+  
+}
 
 const geoUrl =
   'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json';
   
 
-const MapChart = ({ setTooltipContent }) => {
+const MapChart = ({ setTooltipContent }: FunctionConstructor) => {
+  // { setTooltipContent } = props;
   const navigate = useNavigate();
 
-  function handleRoute(link) {
+  function handleRoute(link: string) {
     navigate(link);
   }
 
-  function handleClick(geo) {
+  function handleClick(geoCountyName: string, id: string) {
     let filteredCity = countryCityObj.filter(
       (element) =>
-        element.country === geo.properties.NAME_LONG
+        element.country === geoCountyName
     );
     store.dispatch({
       type: 'SET_COUNTRY_FROM_MAP',
       payload: {
         currentCity: filteredCity[0].city,
-        currentCountry: geo.properties.NAME_LONG,
+        currentCountry: geoCountyName,
       },
     });
-    console.log(geo)
-    handleRoute(`/dashboard/${geo.properties.NAME_LONG}/${geo.rsmKey}`)
+    console.log(geoCountyName)
+    handleRoute(`/dashboard/${geoCountyName}/${id}`)
   }
 
   return (
@@ -49,13 +53,13 @@ const MapChart = ({ setTooltipContent }) => {
                   <Geography
                     key={geo.rsmKey}
                     geography={geo}
-                    onClick={() => handleClick(geo)}
+                    onClick={() => handleClick(geo.properties.NAME_LONG, geo.rsmKey)}
                     onMouseEnter={() => {
-                      const { NAME } = geo.properties;
+                      // const { NAME } = geo.properties;
                       setTooltipContent(
                         <TooltipModal
                           details={geo.properties}
-                          NAME={NAME}
+                          // NAME={NAME}
                         />
                       );
                     }}
