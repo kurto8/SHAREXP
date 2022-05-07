@@ -1,10 +1,4 @@
-import React, {
-  StrictMode,
-  useState,
-  useEffect,
-  createContext,
-  useContext,
-} from 'react';
+import React, { StrictMode } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';

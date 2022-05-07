@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   ZoomableGroup,
   ComposableMap,
@@ -12,9 +13,30 @@ import TooltipModal from './TooltipModal.jsx';
 
 const geoUrl =
   'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json';
-  console.log()
+  
 
 const MapChart = ({ setTooltipContent }) => {
+  const navigate = useNavigate();
+
+  function handleRoute(link) {
+    navigate(link);
+  }
+
+  function handleClick(geo) {
+    let filteredCity = countryCityObj.filter(
+      (element) =>
+        element.country === geo.properties.NAME_LONG
+    );
+    store.dispatch({
+      type: 'SET_COUNTRY_FROM_MAP',
+      payload: {
+        currentCity: filteredCity[0].city,
+        currentCountry: geo.properties.NAME_LONG,
+      },
+    });
+    console.log(geo)
+    handleRoute(`/dashboard/${geo.properties.NAME_LONG}/${geo.rsmKey}`)
+  }
 
   return (
     <>
@@ -27,19 +49,7 @@ const MapChart = ({ setTooltipContent }) => {
                   <Geography
                     key={geo.rsmKey}
                     geography={geo}
-                    onClick={() => {
-                      let filteredCity = countryCityObj.filter(
-                        (element) =>
-                          element.country === geo.properties.NAME_LONG
-                      );
-                      store.dispatch({
-                        type: 'SET_COUNTRY_FROM_MAP',
-                        payload: {
-                          currentCity: filteredCity[0].city,
-                          currentCountry: geo.properties.NAME_LONG,
-                        },
-                      });
-                    }}
+                    onClick={() => handleClick(geo)}
                     onMouseEnter={() => {
                       const { NAME } = geo.properties;
                       setTooltipContent(

@@ -70,7 +70,7 @@ function CompanyDisplay() {
   }
 
   function toggleModal() {
-    showModal(!modal ? true : false);
+    showModal(!modal);
   }
   console.log('showModal:', modal);
 

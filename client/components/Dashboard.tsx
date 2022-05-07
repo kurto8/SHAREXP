@@ -42,9 +42,7 @@ export default function Dashboard() {
   const [cards, setCompanyCards] = useState<Array<CompanyCardInfo>>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState(false);
-  // const [add, setAdd] = useState(false);
-  // const [company, setCompany] = useState({});
-  // const [inputCompany, setInputCompany] = useState('');
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -97,12 +95,6 @@ export default function Dashboard() {
     handleRoute('/');
     logOut();
   }
-
-  // function handleSelect() {
-  //   setCompany(cards[0]);
-  //   setInputCompany( `${cards[0].name}/${cards[0].id}`);
-  //   handleCompanySelect(`${cards[0].name}/${cards[0].id}`)
-  // }
 
   return (
     <Fragment>
@@ -157,30 +149,6 @@ export default function Dashboard() {
                 <br />
                 {search ? (
                   <Stack spacing={2}>
-                    {/* <Autocomplete
-                      // id="links"
-                      value={company}
-                      inputValue={inputCompany}
-                      onChange={(event, newValue) => {
-                        setCompany(newValue);
-                      }}
-                      onInputChange={(event, newInput) => {
-                        setInputCompany(newInput);
-                      }}
-                      options={cards}
-                      getOptionLabel={(option) => option.name}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          // {...input}
-                          label='Search here....'
-                        />
-                      )}
-                      onClick={handleSelect}
-                      onKeyUp={(e) => {
-                        if (e.key === "Enter") handleSelect
-                      }}
-                    /> */}
                     <Select
                       value=''
                       onChange={(e) => handleRoute(e.target.value)}
@@ -206,20 +174,6 @@ export default function Dashboard() {
                 <Button variant='outlined' onClick={promptBox}>
                   Add Company To Dashboard
                 </Button>
-                {/* <br />
-                {add ? (
-                  <TextField
-                    value={company}
-                    label='Enter new company name:'
-                    onChange={(e) => {
-                      // if (/^[a-z0-9\s]+$/i.test(e.target.value)) setCompany(e.target.value)
-                      if (e.target.value[-1] !== "Enter") setCompany(e.target.value)
-                    }}
-                    onKeyUp={(e) => {
-                      if (e.key === 'Enter') promptBox(company)
-                    }}
-                    ></TextField>
-                 ) : null}  */}
               </Box>
             </Stack>
           </Container>
@@ -230,7 +184,7 @@ export default function Dashboard() {
             height: '100%',
             display: 'flex',
             justifyContent: 'center',
-            px:'100px',
+            px: '100px',
           }}>
           <Container
             maxWidth='lg'

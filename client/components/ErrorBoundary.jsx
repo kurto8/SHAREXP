@@ -27,11 +27,11 @@ class ErrorBoundary extends Component {
 
   render() {
     if (this.setState.redirect) {
-      return <Navigate replace to="/dashboard" />;
+      return <Navigate replace to="/" />;
     } else if (this.state.hasError) {
       return (
         <h2>
-          This was an error. <Link to="/dashboard">Click here</Link> to go back
+          This was an error. <Link to="/">Click here</Link> to go back
           to the Home Page.
         </h2>
       );
