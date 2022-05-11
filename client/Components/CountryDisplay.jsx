@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   AppBar,
@@ -18,9 +18,9 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import Modal from './Modal';
+import Modal from './H.O.Components/Modal';
 import ReviewEntry from './ReviewEntry';
-import ErrorBoundary from './ErrorBoundary';
+import ErrorBoundary from './H.O.Components/ErrorBoundary';
 
 function CountryDisplay() {
   const { countryInfoArr, country, capital, properties } = useSelector(
@@ -30,6 +30,7 @@ function CountryDisplay() {
   const dispatch = useDispatch();
   const [modal, showModal] = useState(false);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(false);
@@ -81,9 +82,9 @@ function CountryDisplay() {
               direction='row'
               spacing={2}
               justifyContent='center'>
-              <Link to={'/'} style={{ textDecoration: 'none' }}>
-                <Button variant='outlined'>Back To Map</Button>
-              </Link>
+              <Button variant='outlined' onClick={() => navigate('/')}>
+                Back To Map
+              </Button>
               <Button variant='contained' onClick={toggleModal}>
                 Add Experience
               </Button>
@@ -167,7 +168,6 @@ function CountryDisplay() {
   );
 }
 
-
 // Example of nested HIGHER ORDER COMPONENTS
 export default function CompanyDisplayWithErrorBoundary() {
   return (
@@ -176,4 +176,3 @@ export default function CompanyDisplayWithErrorBoundary() {
     </ErrorBoundary>
   );
 }
-

@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Provider } from 'react-redux';
-import store from '../redux/store';
+import store from '../reduxFeatures/reduxStore';
 // import UserProvider from './Auth&Log';
 import SignIn from './SignIn';
 import Dashboard from './Dashboard';

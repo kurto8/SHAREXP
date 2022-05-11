@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import experienceArray from '../../mockData';
+import experienceArray from '../mockData';
 
 const geoUrl =
   'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json';
@@ -11,7 +11,7 @@ const initialState = {
   country: '',
   capital: '',
   properties: {},
-  id: ""
+  // geoID: '',
   // isLoading: true,
 };
 

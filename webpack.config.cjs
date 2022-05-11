@@ -17,7 +17,7 @@ const config = {
     port: 3000,
     proxy: { "/api": "http://localhost:8080" },
   },
-  entry: path.resolve(__dirname, "./client/components/App.tsx"),
+  entry: path.resolve(__dirname, "./client/Components/App.tsx"),
   output: {
     path: path.resolve(__dirname, "./dist"),
     filename: "bundle.js",

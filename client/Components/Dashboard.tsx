@@ -1,8 +1,3 @@
-import React, { Fragment, useContext, useState, useEffect } from 'react';
-import ReactTooltip from 'react-tooltip';
-import { useNavigate } from 'react-router-dom';
-import { UserContext } from './Auth&Log';
-import WorldMap from './DashboardChildren/WorldMap';
 import {
   AppBar,
   Button,
@@ -22,9 +17,17 @@ import {
   Autocomplete,
   TextField,
   InputLabel,
+  Input,
 } from '@mui/material';
 import { BorderAllRounded } from '@mui/icons-material';
-// import CompanyDisplayWithErrorBoundary from './CompanyDisplay';
+import React, { Fragment, useContext, useState, useEffect } from 'react';
+import { ReactSearchAutocomplete } from 'react-search-autocomplete'
+import ReactTooltip from 'react-tooltip';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from './Auth&Log';
+import { RootState } from '../reduxFeatures/reduxStore';
+import WorldMap from './DashboardChildren/WorldMap';
 
 interface CompanyCardInfo {
   id: number,
@@ -33,6 +36,7 @@ interface CompanyCardInfo {
 }
 
 export default function Dashboard() {
+  const { expInfoArr } = useSelector((store: RootState) => store.geo);
   const [content, setContent] = useState<FunctionConstructor | JSX.Element>();
   const { user, logOut } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
@@ -107,28 +111,20 @@ export default function Dashboard() {
                   flexDirection: 'column',
                   justifyContent: 'center',
                 }}>
-                <Button
-                  variant='contained'
-                  onClick={() => setSearch(search ? false : true)}>
-                  Search Existing Travels
-                </Button>
-                <br />
-                {search ? (
                   <Stack spacing={2}>
                     <Select
-                      value=''
+                      defaultValue='Select a Country'
                       onChange={(e) => handleRoute(e.target.value)}
                       onBlur={(e) => handleRoute(e.target.value)}>
-                      {cards.map((company) => (
+                      {expInfoArr.map((expInfo) => (
                         <MenuItem
-                          key={company.id}
-                          value={`/dashboard/${company.name}/${company.id}`}>
-                          {company.name}
+                          key={expInfo.id}
+                          value={`/dashboard/${expInfo.country}/${expInfo.id}`}>
+                          {expInfo.country}
                         </MenuItem>
                       ))}
                     </Select>
                   </Stack>
-                ) : null}
               </Box>
              
             </Stack>
