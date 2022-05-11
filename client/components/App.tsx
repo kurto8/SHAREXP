@@ -8,10 +8,10 @@ import store from '../redux/store';
 import SignIn from './SignIn';
 import Dashboard from './Dashboard';
 import SignUp from './SignUp';
-import CompanyDisplay from './CompanyDisplay';
+import CountryDisplay from './CountryDisplay';
 import '../static/styles.css';
 // const Dashboard = React.lazy(() => import('./Dashboard'));
-// const CompanyDisplay = React.lazy(() => import('./CompanyDisplay'));
+// const CountryDisplay = React.lazy(() => import('./CountryDisplay'));
 
 const App = () => {
   const lightTheme = createTheme();
@@ -31,7 +31,7 @@ const App = () => {
               {/* <Route path='/dashboard' element={<Dashboard />}></Route> */}
               <Route
                 path='/dashboard/:companyName/:companyId'
-                element={<CompanyDisplay />}></Route>
+                element={<CountryDisplay />}></Route>
               {/* <Route path='/' element={<SignIn />}></Route> */}
               <Route path='/' element={<Dashboard />}></Route>
             </Routes>

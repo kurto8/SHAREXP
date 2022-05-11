@@ -916,7 +916,7 @@ const countryCityObj = [
       "city": "London"
   },
   {
-      "country": "United States of America",
+      "country": "United States",
       "city": "Washington"
   },
   {

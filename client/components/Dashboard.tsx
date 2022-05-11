@@ -34,56 +34,22 @@ interface CompanyCardInfo {
 
 export default function Dashboard() {
   const [content, setContent] = useState<FunctionConstructor | JSX.Element>();
-
-  const storage = sessionStorage.getItem('DashboardCache');
-  const cache = useState(storage ? JSON.parse(storage) : []);
-  const [cachedData, setCachedData] = useState(storage ? true : false);
   const { user, logOut } = useContext(UserContext);
-  const [cards, setCompanyCards] = useState<Array<CompanyCardInfo>>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('cache:', cache[0]);
-    if (cachedData) {
-      setCompanyCards(cache[0]);
-      setLoading(false);
-    } else renderCompanyCards();
+   
   }, []);
 
   async function renderCompanyCards() {
     try {
-      const response = await fetch('/api/companies');
-      const dataObj: Record<string, CompanyCardInfo[]> = await response.json();
-      let compArr = dataObj.companies;
-      sessionStorage.setItem('DashboardCache', JSON.stringify(compArr));
-      setCachedData(true);
-      setCompanyCards(compArr);
-      setLoading(false);
-      console.log('fetched Arr:', compArr);
+     
+      console.log('fetched Arr:');
     } catch (err) {
       console.log('fetch err0r:', err);
-    }
-  }
-
-  function promptBox() {
-    let company = prompt('Please enter new company name:', '');
-    if (company !== null && company !== undefined && company !== '') {
-      fetch('/api/companies', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: company,
-        }),
-      })
-        .then((response) => response.json())
-        .then((dataObj) => {
-          console.log(dataObj);
-          renderCompanyCards();
-        })
-        .catch((err) => console.log(err));
     }
   }
 
@@ -126,7 +92,7 @@ export default function Dashboard() {
               align='center'
               color='text.primary'
               gutterBottom>
-              Reviewed Companies
+              Shared Travel Experiences
             </Typography>
             <Stack
               sx={{ pt: 4 }}
@@ -144,7 +110,7 @@ export default function Dashboard() {
                 <Button
                   variant='contained'
                   onClick={() => setSearch(search ? false : true)}>
-                  Search Existing Companies
+                  Search Existing Travels
                 </Button>
                 <br />
                 {search ? (
@@ -164,17 +130,7 @@ export default function Dashboard() {
                   </Stack>
                 ) : null}
               </Box>
-              <Box
-                sx={{
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                }}>
-                <Button variant='outlined' onClick={promptBox}>
-                  Add Company To Dashboard
-                </Button>
-              </Box>
+             
             </Stack>
           </Container>
         </Box>

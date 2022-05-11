@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   AppBar,
   Button,
@@ -21,49 +22,23 @@ import Modal from './Modal';
 import ReviewEntry from './ReviewEntry';
 import ErrorBoundary from './ErrorBoundary';
 
-function CompanyDisplay() {
-  interface ReviewBasics {
-    id: number;
-    title: string;
-    timePosted: string;
-    author: string;
-    levelName: string;
-    positionName: string;
-    salaryRange: string;
-    locationName: string;
-    userId?: number;
-    companyId?: number | undefined;
-  }
-
-  const { companyId, companyName } = useParams();
-  const storage = sessionStorage.getItem(`${companyId}` + 'Cache')
-  const cache = useState(storage ? JSON.parse(storage) : []);
-  const [cachedData, setCachedData] = useState(storage ? true : false);
-  const [cards, setCards] = useState<Array<ReviewBasics>>([]);
+function CountryDisplay() {
+  const { countryInfoArr, country, capital, properties } = useSelector(
+    (store) => store.geo
+  );
+  console.log(countryInfoArr);
+  const dispatch = useDispatch();
   const [modal, showModal] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log('cache:', cache[0]);
-    if (cachedData) {
-      setCards(cache[0]);
-      setLoading(false);
-    } else renderReviews();
+    setLoading(false);
   }, []);
 
   async function renderReviews() {
     try {
-      const response = await fetch(`/api/companies/${companyId}`);
-      const dataObj: Record<string, ReviewBasics[]> = await response.json();
-      let reviewsArr = dataObj.posts;
-      sessionStorage.setItem(
-        `${companyId}` + 'Cache',
-        JSON.stringify(reviewsArr)
-      );
-      setCachedData(true);
-      setCards(reviewsArr);
       setLoading(false);
-      console.log('fetched Arr:', reviewsArr);
+      console.log('fetched Arr:');
     } catch (err) {
       console.log(err);
     }
@@ -99,18 +74,18 @@ function CompanyDisplay() {
               align='center'
               color='text.primary'
               gutterBottom>
-              {companyName} Reviews
+              {country} Experiences
             </Typography>
             <Stack
               sx={{ pt: 4 }}
               direction='row'
               spacing={2}
               justifyContent='center'>
-              <Link to={'/dashboard'} style={{ textDecoration: 'none' }}>
-                <Button variant='outlined'>Back To Dashboard</Button>
+              <Link to={'/'} style={{ textDecoration: 'none' }}>
+                <Button variant='outlined'>Back To Map</Button>
               </Link>
               <Button variant='contained' onClick={toggleModal}>
-                Add New Review
+                Add Experience
               </Button>
             </Stack>
           </Container>
@@ -125,8 +100,8 @@ function CompanyDisplay() {
             </Box>
           ) : (
             <Grid container spacing={4}>
-              {cards.map((card) => (
-                <Grid item key={card.id} xs={16}>
+              {countryInfoArr.map((expInfo) => (
+                <Grid item key={expInfo.id} xs={16}>
                   <Paper
                     sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                     <Typography
@@ -134,28 +109,22 @@ function CompanyDisplay() {
                       align='center'
                       color='text.secondary'
                       paragraph>
-                      Review Title: {card.title}
+                      {expInfo.city}
                     </Typography>
                     <Table size='medium'>
                       <TableHead>
                         <TableRow>
                           <TableCell>Date</TableCell>
-                          <TableCell>Name</TableCell>
-                          <TableCell>Position</TableCell>
-                          <TableCell>Salary Range</TableCell>
-                          <TableCell>Job Location</TableCell>
+                          <TableCell>First Name</TableCell>
+                          <TableCell>Last Name</TableCell>
                           <TableCell align='right'>Upvotes</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
                         <TableRow>
-                          <TableCell>{card.timePosted.slice(0, 10)}</TableCell>
-                          <TableCell>{card.author}</TableCell>
-                          <TableCell>
-                            {card.levelName}-level {card.positionName}
-                          </TableCell>
-                          <TableCell>{card.salaryRange}</TableCell>
-                          <TableCell>{card.locationName}</TableCell>
+                          <TableCell>{expInfo.date}</TableCell>
+                          <TableCell>{expInfo.firstName}</TableCell>
+                          <TableCell>{expInfo.lastName}</TableCell>
                           <TableCell align='right'>👍 6 👎</TableCell>
                         </TableRow>
                       </TableBody>
@@ -184,7 +153,7 @@ function CompanyDisplay() {
           align='center'
           color='text.secondary'
           component='p'>
-          Please add more reviews to strengthen our network
+          Thanks for sharing all your great experiences
         </Typography>
         {/* <Copyright /> */}
       </Box>
@@ -198,45 +167,13 @@ function CompanyDisplay() {
   );
 }
 
-// export default CompanyDisplay;
 
 // Example of nested HIGHER ORDER COMPONENTS
 export default function CompanyDisplayWithErrorBoundary() {
   return (
     <ErrorBoundary>
-      <CompanyDisplay />
+      <CountryDisplay />
     </ErrorBoundary>
   );
 }
 
-// /** Example of creating the component with classes **/
-// function preventDefault(event) {
-//   event.preventDefault();
-// }
-
-// class CompanyDisplay extends Component {
-//   constructor() {
-//     super();
-//     this.state = {
-//       loading: true,
-//       cards: [],
-//       showModal: false,
-//     };
-//   }
-
-//   async componentDidMount() {
-//     const { companyId, companyName } = useParams();
-//     const res = await fetch(`/api/companies/${companyId}`);
-//     const dataObj = await res.json();
-//     this.setState({
-//       loading: false,
-//       cards: dataObj.posts,
-//     });
-//   }
-
-//   toggleModal = () =>
-//     this.setState({ showModal: !this.state.showModal ? true : false });
-
-//   render() {
-//     const theme = createTheme();
-//     const { cards } = this.state;

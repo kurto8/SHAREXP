@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import countryCityObj from '../../countryCapitals';
+import countryArray from '../../countryCapitals';
 import '../../static/styles.css';
 
 interface geoDetails {
@@ -16,7 +16,7 @@ const TooltipModal = (props: geoDetails) => {
   const [city, setCity] = useState<string | null>('');
 
   useEffect(() => {
-    let val = findCountry(countryCityObj, props.details.NAME_LONG);
+    let val = findCountry(countryArray, props.details.NAME_LONG);
     setCity(val);
   }, [props.details.NAME_LONG]);
 
