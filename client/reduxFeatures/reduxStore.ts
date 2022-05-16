@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import geoReducer from './geoSlice.jsx';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   geo: geoReducer,
 });
 

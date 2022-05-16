@@ -12,8 +12,12 @@ import {
 import countryCityObj from '../../countryCapitals';
 import TooltipModal from './TooltipModal';
 
+const geoUrl =
+  'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json';
+
 const MapChart = ({ setTooltipContent }) => {
-  const { geoInfo } = useSelector((store) => store.geo);
+  const geoInfo = geoUrl;
+  // const { geoInfo } = useSelector((store) => store.geo);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const placesTraveled = expDataArray.map((el) => el.country);
@@ -68,7 +72,7 @@ const MapChart = ({ setTooltipContent }) => {
                     }}
                     onMouseEnter={() => {
                       setTooltipContent(
-                        <TooltipModal details={geo.properties} />
+                        <TooltipModal details={geo.properties} data-testid='toolTipModal'/>
                       );
                     }}
                     onMouseLeave={() => {

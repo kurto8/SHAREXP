@@ -21,19 +21,13 @@ import {
 } from '@mui/material';
 import { BorderAllRounded } from '@mui/icons-material';
 import React, { Fragment, useContext, useState, useEffect } from 'react';
-import { ReactSearchAutocomplete } from 'react-search-autocomplete'
+import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import ReactTooltip from 'react-tooltip';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from './Auth&Log';
 import { RootState } from '../reduxFeatures/reduxStore';
 import WorldMap from './DashboardChildren/WorldMap';
-
-interface CompanyCardInfo {
-  id: number,
-  logo: string,
-  name: string,
-}
 
 export default function Dashboard() {
   const { expInfoArr } = useSelector((store: RootState) => store.geo);
@@ -44,13 +38,10 @@ export default function Dashboard() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-   
-  }, []);
+  useEffect(() => {}, []);
 
   async function renderCompanyCards() {
     try {
-     
       console.log('fetched Arr:');
     } catch (err) {
       console.log('fetch err0r:', err);
@@ -98,8 +89,8 @@ export default function Dashboard() {
               gutterBottom>
               Shared Travel Experiences
             </Typography>
-            <Stack
-              sx={{ pt: 4 }}
+            {/* <Stack
+              // sx={{ pt: 4 }}
               direction='row'
               // maxWidth='280px'
               spacing={1}
@@ -111,23 +102,20 @@ export default function Dashboard() {
                   flexDirection: 'column',
                   justifyContent: 'center',
                 }}>
-                  <Stack spacing={2}>
-                    <Select
-                      defaultValue='Select a Country'
-                      onChange={(e) => handleRoute(e.target.value)}
-                      onBlur={(e) => handleRoute(e.target.value)}>
-                      {expInfoArr.map((expInfo) => (
-                        <MenuItem
-                          key={expInfo.id}
-                          value={`/dashboard/${expInfo.country}/${expInfo.id}`}>
-                          {expInfo.country}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </Stack>
+                <Select
+                  defaultValue='Select a Country'
+                  onChange={(e) => handleRoute(e.target.value)}
+                  onBlur={(e) => handleRoute(e.target.value)}>
+                  {expInfoArr.map((expInfo) => (
+                    <MenuItem
+                      key={expInfo.id}
+                      value={`/dashboard/${expInfo.country}/${expInfo.id}`}>
+                      {expInfo.country}
+                    </MenuItem>
+                  ))}
+                </Select>
               </Box>
-             
-            </Stack>
+            </Stack> */}
           </Container>
         </Box>
         {/* End hero unit */}
@@ -144,7 +132,7 @@ export default function Dashboard() {
               bgcolor: '#1c5375',
               borderRadius: '66px',
             }}>
-            <WorldMap setTooltipContent={setContent} />
+            <WorldMap setTooltipContent={setContent} data-testid='map'/>
             <ReactTooltip
               className='tool-tip'
               backgroundColor='white'

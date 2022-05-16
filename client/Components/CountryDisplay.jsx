@@ -156,7 +156,6 @@ function CountryDisplay() {
           component='p'>
           Thanks for sharing all your great experiences
         </Typography>
-        {/* <Copyright /> */}
       </Box>
       {/* End footer */}
       {modal ? (

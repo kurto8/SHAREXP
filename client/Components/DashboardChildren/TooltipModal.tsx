@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import countryArray from '../../countryCapitals';
-import '../../static/styles.css';
 
 interface geoDetails {
   details: Record<string, string>,
